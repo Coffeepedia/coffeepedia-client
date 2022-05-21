@@ -1,4 +1,13 @@
+import { useState } from "react";
+
 export default function LoginPage() {
+  const [data, setData] = useState({ email: "", password: "" });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(data);
+  };
+
   return (
     <section className="flex h-screen flex-col bg-[#EFEAD8] px-6 pt-2">
       {/* Header */}
@@ -27,35 +36,40 @@ export default function LoginPage() {
         Welcome Back!
       </h1>
 
-      <form>
-        <div class="relative mb-8">
+      <form onSubmit={handleSubmit}>
+        {/* Email */}
+        <div className="relative z-0 mb-8">
           <input
+            type="email"
             id="email"
+            className="autofill:bg-[#EFAD8] peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="email"
-            type="text"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="john@doe.com"
-            autoComplete="off"
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
           />
           <label
             for="email"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
-            Email address
+            Email
           </label>
         </div>
 
-        <div class="relative mb-4">
+        {/* Password */}
+        <div className="relative z-0 mb-4">
           <input
-            id="password"
             type="password"
+            id="password"
+            className="peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="password"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="Password"
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.target.value })}
           />
           <label
             for="password"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
             Password
           </label>
@@ -66,6 +80,7 @@ export default function LoginPage() {
         </div>
 
         <input
+          onClick={handleSubmit}
           type="submit"
           value="Login"
           className="mb-2 w-full cursor-pointer rounded-3xl bg-p-dark py-2 text-white"
