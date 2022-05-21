@@ -6,7 +6,7 @@ export default function ArticleCard({ article }) {
   return (
     <div
       onClick={() => navigate(`/articles/${article.id}`)}
-      className="mb-8 flex h-[100px] w-full cursor-pointer"
+      className="mb-8 flex h-[100px] w-full cursor-pointer justify-between"
     >
       <div className="flex basis-2/3 flex-col">
         <div className="basis-1/4 space-x-2">
@@ -41,7 +41,7 @@ export default function ArticleCard({ article }) {
         </div>
       </div>
 
-      <div className="basis-1/3">
+      <div className="basis-1/3 flex justify-end">
         <img
           src={article.imageUrl}
           alt={article.title}
