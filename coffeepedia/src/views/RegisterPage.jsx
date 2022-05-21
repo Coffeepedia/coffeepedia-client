@@ -1,10 +1,28 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function RegisterPage() {
+  const navigate = useNavigate();
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    username: "",
+    phoneNumber: "",
+    address: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(data);
+  };
+
   return (
     <section className="flex h-screen flex-col bg-[#EFEAD8] px-6 pt-2">
       {/* Header */}
       <header className="mb-10 flex w-full">
         {/* Back button */}
-        <button className="basis-1/3">
+        <button onClick={() => navigate(-1)} className="basis-1/3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="left-0 h-8 w-8 fill-p-dark"
@@ -27,88 +45,97 @@ export default function RegisterPage() {
         Join Coffeepedia!
       </h1>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* Email */}
-        <div class="relative mb-8">
+        <div className="relative z-0 mb-8">
           <input
+            type="email"
             id="email"
+            className="autofill:bg-[#EFAD8] peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="email"
-            type="text"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="john@doe.com"
-            autoComplete="off"
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
           />
           <label
             for="email"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
-            Email address
+            Email
           </label>
         </div>
 
         {/* Password */}
-        <div class="relative mb-12">
+        <div className="relative z-0 mb-12">
           <input
-            id="password"
             type="password"
+            id="password"
+            className="peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="password"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="Password"
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.target.value })}
           />
           <label
             for="password"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
             Password
           </label>
         </div>
 
         {/* Username */}
-        <div class="relative mb-8">
+        <div className="relative z-0 mb-8">
           <input
+            type="text"
             id="username"
-            type="username"
+            className="autofill:bg-[#EFAD8] peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="username"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="Username"
+            value={data.username}
+            onChange={(e) => setData({ ...data, username: e.target.value })}
           />
           <label
             for="username"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
             Username
           </label>
         </div>
 
         {/* Phone Number */}
-        <div class="relative mb-8">
+        <div className="relative z-0 mb-8">
           <input
+            type="text"
             id="phoneNumber"
-            type="phoneNumber"
+            className="autofill:bg-[#EFAD8] peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="phoneNumber"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="Phone Number"
+            value={data.phoneNumber}
+            onChange={(e) => setData({ ...data, phoneNumber: e.target.value })}
           />
           <label
             for="phoneNumber"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
             Phone Number
           </label>
         </div>
 
-        {/* address */}
-        <div class="relative mb-8">
+        {/* Address */}
+        <div className="relative z-0 mb-8">
           <input
+            type="text"
             id="address"
-            type="address"
+            className="autofill:bg-[#EFAD8] peer block w-full appearance-none border-0 border-b-2 border-grey-300 bg-transparent py-2.5 px-0 text-grey-900 focus:border-primary focus:outline-none focus:ring-0 dark:border-grey-600 dark:text-white dark:focus:border-primary"
+            placeholder=" "
             name="address"
-            class="peer h-10 w-full border-b-2 border-grey-300 bg-[#EFEAD8] text-grey-900 placeholder-transparent focus:border-b-2 focus:border-p-dark focus:outline-none"
-            placeholder="Address"
+            value={data.address}
+            onChange={(e) => setData({ ...data, address: e.target.value })}
           />
           <label
             for="address"
-            class="absolute left-0 -top-3.5 text-sm text-grey-700 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-grey-500 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-grey-600"
+            className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
           >
             Address
           </label>
@@ -119,13 +146,19 @@ export default function RegisterPage() {
         </div>
 
         <input
+          onClick={handleSubmit}
           type="submit"
           value="Register"
           className="mb-2 w-full cursor-pointer rounded-3xl bg-p-dark py-2 text-white"
         />
         <div className="text-center text-sm">
           Already have an account?{" "}
-          <span className="cursor-pointer font-bold text-p-dark">Login</span>
+          <span
+            onClick={() => navigate("/login")}
+            className="cursor-pointer font-bold text-p-dark"
+          >
+            Login
+          </span>
         </div>
       </form>
     </section>
