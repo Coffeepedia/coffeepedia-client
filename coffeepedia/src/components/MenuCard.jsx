@@ -1,6 +1,6 @@
 export default function MenuCard() {
   return (
-    <div class="grid justify-items-stretch grid-cols-2 gap-4 p-2 mb-[55px]">
+    <div className="grid justify-items-stretch grid-cols-2 gap-4 p-2 mb-[55px]">
       <div className="justify-self-center h-[325px] w-[187px]">
         <div className="flex flex-col items-center bg-[#9FC088] rounded-[15px] p-2 h-[296px] w-[187px] shadow-lg">
           <p className="text-2xl font-semibold text-white">45K</p>
@@ -13,7 +13,7 @@ export default function MenuCard() {
           </div>
           <p className="text-l font-semibold text-white">Chocolate Caramel</p>
         </div>
-        <div class="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%] hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
+        <div className="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%] hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
             alt="Coffeepedia Logo"
@@ -33,7 +33,7 @@ export default function MenuCard() {
           </div>
           <p className="text-l font-semibold text-white">Chocolate Caramel</p>
         </div>
-        <div class="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
+        <div className="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
             alt="Coffeepedia Logo"
@@ -53,7 +53,7 @@ export default function MenuCard() {
           </div>
           <p className="text-l font-semibold text-white">Chocolate Caramel</p>
         </div>
-        <div class="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
+        <div className="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
             alt="Coffeepedia Logo"
@@ -73,7 +73,7 @@ export default function MenuCard() {
           </div>
           <p className="text-l font-semibold text-white">Chocolate Caramel</p>
         </div>
-        <div class="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
+        <div className="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
             alt="Coffeepedia Logo"
@@ -93,7 +93,7 @@ export default function MenuCard() {
           </div>
           <p className="text-l font-semibold text-white">Chocolate Caramel</p>
         </div>
-        <div class="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:ring focus:ring-[#689099] shadow-lg">
+        <div className="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%]  hover:bg-[#557B83] focus:outline-none focus:ring focus:ring-[#689099] shadow-lg">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
             alt="Coffeepedia Logo"
@@ -113,7 +113,7 @@ export default function MenuCard() {
           </div>
           <p className="text-l font-semibold text-white">Chocolate Caramel</p>
         </div>
-        <button class="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%] hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
+        <button className="flex justify-center items-center p-3 w-[51px] h-[51px] bg-white rounded-full mt-[-27px] ml-[37%] hover:bg-[#557B83] focus:outline-none focus:bg focus:bg-[#689099] shadow-lg">
           <img
             src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
             alt="Coffeepedia Logo"

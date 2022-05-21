@@ -122,8 +122,8 @@ export default function OrderPage() {
           <div className="w-full h-[100px] p-4 ">
             <div className="w-full h-full bg-white rounded-[30px]">
               <div className="flex flex-row justify-end items-center p-4 gap-x-10">
-                <div class="basis-1/3 text-2xl font-bold">IDR 105000</div>
-                <div class="basis-1/3">
+                <div className="basis-1/3 text-2xl font-bold">IDR 105000</div>
+                <div className="basis-1/3">
                   <button className="bg-[#1F3933] w-[115px] h-10 rounded-[30px] text-white text-lg font-semibold">
                     Order
                   </button>
