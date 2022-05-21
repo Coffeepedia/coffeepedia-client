@@ -1,7 +1,11 @@
+import MenuPage from "./views/MenuPage";
+import OrderPage from "./views/OrderPage";
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <MenuPage />
+      <OrderPage />
     </div>
   );
 }
