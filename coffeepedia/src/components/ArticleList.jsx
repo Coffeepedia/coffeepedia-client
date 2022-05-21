@@ -75,7 +75,7 @@ export default function ArticleList() {
   ];
 
   return (
-    <section className="rounded-t-3xl px-6 pt-2 shadow bg-white">
+    <section className="rounded-t-3xl px-6 pt-3 shadow bg-white">
       {/* Header */}
       <header className="mb-4 flex items-center justify-between">
         <h1 className="text-lg font-semibold">Anything about Coffee</h1>
