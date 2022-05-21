@@ -1,4 +1,3 @@
-
 import MenuPage from "./views/MenuPage";
 import OrderPage from "./views/OrderPage";
 import CoffeeRadarPage from "./views/CoffeeRadarPage";
@@ -13,7 +12,7 @@ import RegisterPage from "./views/RegisterPage";
 
 function App() {
   return (
-    <div className="App bg-gray-200 flex justify-center">
+    <div className="App flex justify-center bg-gray-200">
       <div className="w-[620px]">
         <Routes>
           <Route path="/" element={<OnboardingPage />} />
@@ -23,7 +22,9 @@ function App() {
             <Route path="" element={<ArticleFeed />} />
             <Route path=":id" element={<ArticleDetailPage />} />
           </Route>
-          
+          <Route path="/menu" element={<MenuPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/radar" element={<CoffeeRadarPage />} />
         </Routes>
       </div>
     </div>
