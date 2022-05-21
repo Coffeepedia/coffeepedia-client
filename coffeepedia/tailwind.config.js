@@ -8,6 +8,7 @@ module.exports = withMT({
         primary: "#006241",
         "p-dark": "#1f3933",
         "p-light": "#d4e9e2",
+        "s-light": "#EFEAD8",
       },
     },
   },
