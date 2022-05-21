@@ -118,7 +118,7 @@ export default function OrderPage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col mb-[60px]">
+        <div className="flex flex-col ">
           <div className="w-full h-[100px] p-4 ">
             <div className="w-full h-full bg-white rounded-[30px]">
               <div className="flex flex-row justify-end items-center p-4 gap-x-10">
