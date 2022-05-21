@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import imgArticle from "../assets/svg/articles_onboarding.svg";
 import imgRadar from "../assets/svg/radar_onboarding.svg";
 import imgOrder from "../assets/svg/order_onboarding.svg";
-import blob from "../assets/blob.svg";
-import logo from "../assets/coffeepedia_logo_transparent.png";
 
 export default function OnboardingPage() {
+  const navigate = useNavigate();
+
   const color = {
     darkslategray: "#1f3933",
     warm: "#EFEAD8",
@@ -40,11 +42,17 @@ export default function OnboardingPage() {
         ))}
       </ul>
 
-      <div className="flex w-screen justify-between gap-x-8 px-4 mt-20">
-        <button className="basis-1/2 rounded-3xl border-2 border-p-dark bg-p-dark py-2 font-semibold text-white">
+      <div className="mt-20 flex w-screen justify-between gap-x-8 px-4">
+        <button
+          onClick={() => navigate("/register")}
+          className="basis-1/2 rounded-3xl border-2 border-p-dark bg-p-dark py-2 font-semibold text-white"
+        >
           Register
         </button>
-        <button className="basis-1/2 rounded-3xl border-2 border-p-dark bg-white py-2 font-semibold text-p-dark">
+        <button
+          onClick={() => navigate("/login")}
+          className="basis-1/2 rounded-3xl border-2 border-p-dark bg-white py-2 font-semibold text-p-dark"
+        >
           Login
         </button>
       </div>
