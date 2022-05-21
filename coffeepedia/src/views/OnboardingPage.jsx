@@ -42,7 +42,7 @@ export default function OnboardingPage() {
         ))}
       </ul>
 
-      <div className="mt-20 flex w-screen justify-between gap-x-8 px-4">
+      <div className="mt-20 flex w-screen max-w-[620px] justify-between gap-x-8 px-4">
         <button
           onClick={() => navigate("/register")}
           className="basis-1/2 rounded-3xl border-2 border-p-dark bg-p-dark py-2 font-semibold text-white"
