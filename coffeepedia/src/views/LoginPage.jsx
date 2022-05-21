@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({ email: "", password: "" });
 
   const handleSubmit = (e) => {
@@ -13,7 +16,7 @@ export default function LoginPage() {
       {/* Header */}
       <header className="mb-10 flex w-full">
         {/* Back button */}
-        <button className="basis-1/3">
+        <button onClick={() => navigate(-1)} className="basis-1/3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="left-0 h-8 w-8 fill-p-dark"
@@ -87,7 +90,12 @@ export default function LoginPage() {
         />
         <div className="text-center text-sm">
           Don't have an account?{" "}
-          <span className="cursor-pointer font-bold text-p-dark">Register</span>
+          <span
+            onClick={() => navigate("/register")}
+            className="cursor-pointer font-bold text-p-dark"
+          >
+            Register
+          </span>
         </div>
       </form>
     </section>

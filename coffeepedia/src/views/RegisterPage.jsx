@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -19,7 +22,7 @@ export default function RegisterPage() {
       {/* Header */}
       <header className="mb-10 flex w-full">
         {/* Back button */}
-        <button className="basis-1/3">
+        <button onClick={() => navigate(-1)} className="basis-1/3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="left-0 h-8 w-8 fill-p-dark"
@@ -150,7 +153,12 @@ export default function RegisterPage() {
         />
         <div className="text-center text-sm">
           Already have an account?{" "}
-          <span className="cursor-pointer font-bold text-p-dark">Login</span>
+          <span
+            onClick={() => navigate("/login")}
+            className="cursor-pointer font-bold text-p-dark"
+          >
+            Login
+          </span>
         </div>
       </form>
     </section>
