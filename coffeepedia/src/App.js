@@ -1,3 +1,7 @@
+
+import MenuPage from "./views/MenuPage";
+import OrderPage from "./views/OrderPage";
+import CoffeeRadarPage from "./views/CoffeeRadarPage";
 import { Routes, Route } from "react-router-dom";
 import ArticlePage from "./views/ArticlePage";
 import ArticleDetailPage from "./views/ArticleDetailPage";
@@ -19,6 +23,7 @@ function App() {
             <Route path="" element={<ArticleFeed />} />
             <Route path=":id" element={<ArticleDetailPage />} />
           </Route>
+          
         </Routes>
       </div>
     </div>
