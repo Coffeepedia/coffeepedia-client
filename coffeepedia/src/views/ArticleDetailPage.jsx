@@ -13,7 +13,7 @@ export default function ArticleDetailPage() {
   const navigate = useNavigate()
   const [bookmark, setBookmark] = useState(false);
   const backBtnHandler = () => {
-    navigate('/articles')
+    navigate(-1)
   };
 
   const bookmarkBtnHandler = () => {
@@ -34,9 +34,8 @@ export default function ArticleDetailPage() {
             <svg
               onClick={() => backBtnHandler()}
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-5 left-3 h-12 w-12 hover:fill-p-dark"
+              className="absolute top-5 left-3 h-12 w-12 fill-s-light hover:fill-p-dark"
               viewBox="0 0 20 20"
-              fill="#EFEAD8"
             >
               <path
                 fillRule="evenodd"
@@ -71,12 +70,12 @@ export default function ArticleDetailPage() {
           </div>
           <div className="bg-primary py-4 px-3 shadow-md">
             <div className="flex flex-wrap">
-              {data.getArticleById.tag.map(tag => (<p key={tag} className="text-md mb-2 mr-2 w-fit rounded-lg bg-p-dark px-2 py-0.5 font-semibold text-p-light">
+              {data.getArticleById.tag.map(tag => (<p key={tag} className="rounded-xl bg-grey-300 px-2 py-[2px] text-[10px] font-medium text-grey-600 mr-2 mb-2">
                 {tag}
               </p>))}
               
             </div>
-            <p className="mb-2 text-3xl font-bold text-s-light">
+            <p className="mb-2 text-2xl font-bold text-s-light">
               {data.getArticleById.title}
             </p>
             <div className="flex">
@@ -85,7 +84,7 @@ export default function ArticleDetailPage() {
             </div>
           </div>
           <div className="px-3 py-2">
-            <pre className="whitespace-pre-wrap font-sans">{data.getArticleById.content.split('\\n').join('\n\n')}</pre>
+            <pre className="whitespace-pre-wrap font-sans text-justify">{data.getArticleById.content.split('\\n').join('\n\n')}</pre>
           </div>
         </>
       )}
