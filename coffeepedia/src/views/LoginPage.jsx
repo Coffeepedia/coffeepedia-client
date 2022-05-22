@@ -56,7 +56,7 @@ export default function LoginPage() {
               onChange={(e) => setData({ ...data, email: e.target.value })}
             />
             <label
-              for="email"
+              htmlFor="email"
               className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
             >
               Email
@@ -75,7 +75,7 @@ export default function LoginPage() {
               onChange={(e) => setData({ ...data, password: e.target.value })}
             />
             <label
-              for="password"
+              htmlFor="password"
               className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-grey-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-primary dark:text-grey-400 peer-focus:dark:text-primary"
             >
               Password
