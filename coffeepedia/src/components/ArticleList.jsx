@@ -13,7 +13,7 @@ export default function ArticleList({ articles }) {
 
       {/* Cards */}
       {articles.map((article) => (
-        <ArticleCard key={article.id} article={article} />
+        <ArticleCard key={article._id} article={article} />
       ))}
     </section>
   );
