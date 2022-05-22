@@ -6,19 +6,19 @@ export default function OrderPage() {
   return (
     <>
       <div className="container-sm h-full bg-[#EFEAD8]">
-        <div className="bg-[#1F3933] h-[80px] p-4">
-          <div className="grid grid-cols-10 mb-4 mt-3">
+        <div className="h-[80px] bg-[#1F3933] p-4">
+          <div className="mb-4 mt-3 grid grid-cols-10">
             <img src={leftarrow} alt="" className="h-6 w-6" />
-            <p className="col-span-9 text-white font-semibold text-2xl mt-[-6px]">
+            <p className="col-span-9 mt-[-6px] text-2xl font-semibold text-white">
               Store
             </p>
           </div>
         </div>
-        <div className="flex flex-col w-full h-full">
+        <div className="flex flex-col">
           <div className="p-4">
-            <div className="bg-white rounded-[30px] p-2 shadow-lg grid grid-cols-8 gap-4">
+            <div className="grid grid-cols-8 gap-4 rounded-[30px] bg-white p-2 shadow-lg">
               <input
-                className="w-full px-4 focus:ring focus:ring-white col-span-7"
+                className="col-span-7 w-full px-4 focus:ring focus:ring-white"
                 type=""
                 placeholder="Search"
               />
@@ -26,16 +26,16 @@ export default function OrderPage() {
             </div>
           </div>
           <div>
-            <img className="w-full h-[500px]" src={map} alt="" />
+            <img className="h-[500px] w-full" src={map} alt="" />
           </div>
-          <div className="mb-[60px]">
-            <div className="grid items-stretch justify-items-stretch grid-cols-4 w-full h-[120px] bg-gray-200 p-4 px-6">
-              <div className="self-center col-span-3">
-                <p className="font-semibold text-lg">Hazel Cafe</p>
+          <div className="flex h-full w-full flex-col">
+            <div className="grid h-[120px] w-full grid-cols-4 items-stretch justify-items-stretch bg-gray-200 p-4 px-6">
+              <div className="col-span-3 self-center">
+                <p className="text-lg font-semibold">Hazel Cafe</p>
                 <p>Jalan Ciffest Cikupa, Tangerang</p>
                 <p>1,4 Kilometers away</p>
               </div>
-              <div className="justify-self-end self-center">
+              <div className="self-center justify-self-end">
                 <img
                   src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
                   alt=""
@@ -43,13 +43,13 @@ export default function OrderPage() {
                 />
               </div>
             </div>
-            <div className="grid items-stretch justify-items-stretch grid-cols-4 w-full h-[120px] bg-white p-4 px-6">
-              <div className="self-center col-span-3">
-                <p className="font-semibold text-lg">Hazel Cafe</p>
+            <div className="grid h-[120px] w-full grid-cols-4 items-stretch justify-items-stretch bg-white p-4 px-6">
+              <div className="col-span-3 self-center">
+                <p className="text-lg font-semibold">Hazel Cafe</p>
                 <p>Jalan Ciffest Cikupa, Tangerang</p>
                 <p>1,4 Kilometers away</p>
               </div>
-              <div className="justify-self-end self-center">
+              <div className="self-center justify-self-end">
                 <img
                   src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
                   alt=""
@@ -57,13 +57,13 @@ export default function OrderPage() {
                 />
               </div>
             </div>
-            <div className="grid items-stretch justify-items-stretch grid-cols-4 w-full h-[120px] bg-white p-4 px-6">
-              <div className="self-center col-span-3">
-                <p className="font-semibold text-lg">Hazel Cafe</p>
+            <div className="grid h-[120px] w-full grid-cols-4 items-stretch justify-items-stretch bg-white p-4 px-6">
+              <div className="col-span-3 self-center">
+                <p className="text-lg font-semibold">Hazel Cafe</p>
                 <p>Jalan Ciffest Cikupa, Tangerang</p>
                 <p>1,4 Kilometers away</p>
               </div>
-              <div className="justify-self-end self-center">
+              <div className="self-center justify-self-end">
                 <img
                   src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
                   alt=""
@@ -71,13 +71,13 @@ export default function OrderPage() {
                 />
               </div>
             </div>
-            <div className="grid items-stretch justify-items-stretch grid-cols-4 w-full h-[120px] bg-white p-4 px-6">
-              <div className="self-center col-span-3">
-                <p className="font-semibold text-lg">Hazel Cafe</p>
+            <div className="grid h-[120px] w-full grid-cols-4 items-stretch justify-items-stretch bg-white p-4 px-6">
+              <div className="col-span-3 self-center">
+                <p className="text-lg font-semibold">Hazel Cafe</p>
                 <p>Jalan Ciffest Cikupa, Tangerang</p>
                 <p>1,4 Kilometers away</p>
               </div>
-              <div className="justify-self-end self-center">
+              <div className="self-center justify-self-end">
                 <img
                   src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
                   alt=""
@@ -85,13 +85,13 @@ export default function OrderPage() {
                 />
               </div>
             </div>
-            <div className="grid items-stretch justify-items-stretch grid-cols-4 w-full h-[120px] bg-white p-4 px-6">
-              <div className="self-center col-span-3">
-                <p className="font-semibold text-lg">Hazel Cafe</p>
+            <div className="grid h-[120px] w-full grid-cols-4 items-stretch justify-items-stretch bg-white p-4 px-6">
+              <div className="col-span-3 self-center">
+                <p className="text-lg font-semibold">Hazel Cafe</p>
                 <p>Jalan Ciffest Cikupa, Tangerang</p>
                 <p>1,4 Kilometers away</p>
               </div>
-              <div className="justify-self-end self-center">
+              <div className="self-center justify-self-end">
                 <img
                   src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
                   alt=""

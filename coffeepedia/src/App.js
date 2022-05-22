@@ -9,6 +9,7 @@ import ArticleFeed from "./components/ArticleFeed";
 import LoginPage from "./views/LoginPage";
 import OnboardingPage from "./views/OnboardingPage";
 import RegisterPage from "./views/RegisterPage";
+import MenuDetailPage from "./views/MenuDetailPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/order" element={<OrderPage />} />
           <Route path="/radar" element={<CoffeeRadarPage />} />
+          <Route path="/detail/:id" element={<MenuDetailPage />} />
         </Routes>
       </div>
     </div>

@@ -3,18 +3,18 @@ import leftarrow from "../assets/leftarrow.png";
 export default function OrderPage() {
   return (
     <>
-      <div className="container-sm h-full bg-[#EFEAD8]">
-        <div className="bg-[#1F3933] h-[165px] p-4">
-          <div className="grid grid-cols-10 mb-4">
+      <div className="container-sm h-screen bg-[#EFEAD8]">
+        <div className="h-[165px] bg-[#1F3933] p-4">
+          <div className="mb-4 grid grid-cols-10">
             <img src={leftarrow} alt="" className="h-6 w-6" />
-            <p className="col-span-9 text-white font-semibold text-2xl mt-[-6px]">
+            <p className="col-span-9 mt-[-6px] text-2xl font-semibold text-white">
               Your Order
             </p>
           </div>
           <p className="mb-2 text-lg text-white">Pickup Store</p>
           <select
             id="countries"
-            className="bg-gray-50 text-white font-medium text-m rounded-lg w-full p-2.5 bg-[#1F3933]"
+            className="text-m w-full rounded-lg bg-[#1F3933] p-2.5 font-medium text-white"
           >
             <option selected>Citraraya Tangerang - 1 km</option>
             <option value="US">United States</option>
@@ -23,9 +23,9 @@ export default function OrderPage() {
             <option value="DE">Germany</option>
           </select>
         </div>
-        <div className="flex flex-col mb-[60px]">
-          <div className="w-full h-[175px] p-4">
-            <div className="w-full h-full bg-white rounded-2xl">
+        <div className="mb-[60px] flex flex-col">
+          <div className="h-[175px] w-full p-4">
+            <div className="h-full w-full rounded-2xl bg-white">
               <div className="grid grid-cols-3 gap-4 p-3">
                 <div className="...">
                   <img
@@ -34,11 +34,11 @@ export default function OrderPage() {
                     className="h-[120px] rounded-2xl"
                   />
                 </div>
-                <div className="col-span-2 ...">
+                <div className="... col-span-2">
                   <p className="text-2xl font-bold">Cappuccino</p>
                   <p className="font-semibold">Grande</p>
                   <p className="font-semibold">IDR 35000</p>
-                  <div className="flex flex-row items-center bg-cyan mt-2">
+                  <div className="bg-cyan mt-2 flex flex-row items-center">
                     <img
                       src="https://cdn-icons-png.flaticon.com/128/992/992651.png"
                       alt=""
@@ -55,8 +55,8 @@ export default function OrderPage() {
               </div>
             </div>
           </div>
-          <div className="w-full h-[175px] p-4">
-            <div className="w-full h-full bg-white rounded-2xl">
+          <div className="h-[175px] w-full p-4">
+            <div className="h-full w-full rounded-2xl bg-white">
               <div className="grid grid-cols-3 gap-4 p-3">
                 <div className="...">
                   <img
@@ -65,11 +65,11 @@ export default function OrderPage() {
                     className="h-[120px] rounded-2xl"
                   />
                 </div>
-                <div className="col-span-2 ...">
+                <div className="... col-span-2">
                   <p className="text-2xl font-bold">Cappuccino</p>
                   <p className="font-semibold">Grande</p>
                   <p className="font-semibold">IDR 35000</p>
-                  <div className="flex flex-row items-center bg-cyan mt-2">
+                  <div className="bg-cyan mt-2 flex flex-row items-center">
                     <img
                       src="https://cdn-icons-png.flaticon.com/128/992/992651.png"
                       alt=""
@@ -86,8 +86,8 @@ export default function OrderPage() {
               </div>
             </div>
           </div>
-          <div className="w-full h-[175px] p-4">
-            <div className="w-full h-full bg-white rounded-2xl">
+          <div className="h-[175px] w-full p-4">
+            <div className="h-full w-full rounded-2xl bg-white">
               <div className="grid grid-cols-3 gap-4 p-3">
                 <div>
                   <img
@@ -100,7 +100,7 @@ export default function OrderPage() {
                   <p className="text-2xl font-bold">Cappuccino</p>
                   <p className="font-semibold">Grande</p>
                   <p className="font-semibold">IDR 35000</p>
-                  <div className="flex flex-row items-center bg-cyan mt-2">
+                  <div className="bg-cyan mt-2 flex flex-row items-center">
                     <img
                       src="https://cdn-icons-png.flaticon.com/128/992/992651.png"
                       alt=""
@@ -119,12 +119,15 @@ export default function OrderPage() {
           </div>
         </div>
         <div className="flex flex-col ">
-          <div className="w-full h-[100px] p-4 ">
-            <div className="w-full h-full bg-white rounded-[30px]">
-              <div className="flex flex-row justify-end items-center p-4 gap-x-10">
-                <div className="basis-1/3 text-2xl font-bold">IDR 105000</div>
-                <div className="basis-1/3">
-                  <button className="bg-[#1F3933] w-[115px] h-10 rounded-[30px] text-white text-lg font-semibold">
+          <div
+            className="h-[100px] w-screen max-w-[620px] p-4 "
+            style={{ position: "fixed", bottom: 0 }}
+          >
+            <div className="h-full w-full rounded-[30px] bg-white">
+              <div className="flex flex-row items-center justify-end gap-x-10 p-4">
+                <div class="basis-1/3 text-2xl font-bold">IDR 105000</div>
+                <div class="basis-1/3">
+                  <button className="h-10 w-[115px] rounded-[30px] bg-[#1F3933] text-lg font-semibold text-white">
                     Order
                   </button>
                 </div>
