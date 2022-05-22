@@ -34,19 +34,21 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && data.getAllItem.length) {
       setFilteredItems(data.getAllItem);
     }
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
-    if (selectedCategoryId !== -1) {
-      const filter = data.getAllItem.filter(
-        (item) => item.CategoryId === selectedCategoryId
-      );
-      setFilteredItems(filter);
-    } else {
-      setFilteredItems(data.getAllItem);
+    if (!loading) {
+      if (selectedCategoryId === -1) {
+        setFilteredItems(data.getAllItem);
+      } else {
+        const filter = data.getAllItem.filter(
+          (item) => item.CategoryId === selectedCategoryId
+        );
+        setFilteredItems(filter);
+      }
     }
   }, [selectedCategoryId]);
 
