@@ -10,6 +10,7 @@ import LoginPage from "./views/LoginPage";
 import OnboardingPage from "./views/OnboardingPage";
 import RegisterPage from "./views/RegisterPage";
 import MenuDetailPage from "./views/MenuDetailPage";
+import CoffeeShopDetailPage from "./views/CoffeeShopDetailPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/order" element={<OrderPage />} />
           <Route path="/radar" element={<CoffeeRadarPage />} />
           <Route path="/detail/:id" element={<MenuDetailPage />} />
+          <Route path="/coffeeshops/:id" element={<CoffeeShopDetailPage />} />
         </Routes>
       </div>
     </div>
