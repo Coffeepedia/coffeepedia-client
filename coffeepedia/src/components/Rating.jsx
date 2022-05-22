@@ -1,11 +1,11 @@
 export default function Rating({ rating, totalReviews }) {
   return (
-    <div class="mb-3 flex items-center border-b-2 border-p-light pb-3">
+    <div className="mb-3 flex items-center border-b-2 border-p-light pb-3">
       {[1, 2, 3, 4, 5].map((rate) => {
         if (rate <= rating) {
           return (
             <svg
-              class="h-5 w-5 text-yellow-400"
+              className="h-5 w-5 text-yellow-400"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ export default function Rating({ rating, totalReviews }) {
         } else {
           return (
             <svg
-              class="h-5 w-5 text-gray-300 dark:text-gray-500"
+              className="h-5 w-5 text-gray-300 dark:text-gray-500"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
