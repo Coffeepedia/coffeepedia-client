@@ -5,7 +5,7 @@ export default function ArticleCard({ article }) {
 
   return (
     <div
-      onClick={() => navigate(`/articles/${article.id}`)}
+      onClick={() => navigate(`/articles/${article._id}`)}
       className="mb-8 flex h-[100px] w-full cursor-pointer justify-between"
     >
       <div className="flex basis-2/3 flex-col">
@@ -32,8 +32,6 @@ export default function ArticleCard({ article }) {
 
         <div className="flex basis-1/4 items-center space-x-1">
           <span className="text-xs text-grey-700">{article.createdAt}</span>
-          <span>⸱</span>
-          <span className="text-xs text-grey-700">4 min</span>
           <span>⸱</span>
           <span className="rounded-xl bg-grey-300 px-2 py-[2px] text-[10px] font-medium text-grey-600">
             {article.tag[0]}
