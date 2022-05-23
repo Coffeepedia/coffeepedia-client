@@ -23,12 +23,6 @@ export default function MenuCard({ item }) {
           <p className="text-xs font-semibold text-gray-500">
             {formatPrice(item.price)}
           </p>
-          <button
-            onClick={() => createOrder(item.id)}
-            className="mt-2 w-1/2 cursor-pointer self-center rounded-xl border border-primary text-xs font-semibold text-primary"
-          >
-            Add
-          </button>
         </div>
       </div>
       {/* <div className="focus:bg flex h-[51px] w-[51px] items-center justify-center rounded-full bg-white p-3 shadow-lg hover:bg-[#557B83] focus:bg-[#689099] focus:outline-none">
