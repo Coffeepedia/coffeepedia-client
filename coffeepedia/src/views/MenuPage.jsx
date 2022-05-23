@@ -68,37 +68,39 @@ export default function HomePage() {
   return (
     <div className="h-full min-h-screen w-screen">
       <div
-        className="container-sm h-full bg-[#EFEAD8] p-2"
+        className="container-sm h-full bg-[#EFEAD8]"
         style={{ position: "relative" }}
       >
         <HeaderNav />
-        <div className="px-6">
-          <p className="mb-2 text-2xl font-[700]">Menu</p>
-        </div>
-        <div className="flex w-screen flex-row justify-between overflow-x-auto px-6">
-          <p
-            onClick={() => setSelectedCategoryId(-1)}
-            className={
-              "mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] " +
-              categorySelectorStyle(-1)
-            }
-          >
-            All Item
-          </p>
-          {categories.data.map((category) => (
+        <div className="sticky top-0 mb-6 border-b border-black bg-s-light pb-2">
+          <div className="px-4">
+            <p className="mb-2 text-2xl font-[700]">Menu</p>
+          </div>
+          <div className="flex w-screen flex-row justify-between overflow-x-auto px-4">
             <p
-              key={category.id}
-              onClick={() => setSelectedCategoryId(category.id)}
-              className={`mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] ${categorySelectorStyle(
-                category.id
-              )}`}
+              onClick={() => setSelectedCategoryId(-1)}
+              className={
+                "mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] " +
+                categorySelectorStyle(-1)
+              }
             >
-              {category.name}
+              All Item
             </p>
-          ))}
+            {categories.data.map((category) => (
+              <p
+                key={category.id}
+                onClick={() => setSelectedCategoryId(category.id)}
+                className={`mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] ${categorySelectorStyle(
+                  category.id
+                )}`}
+              >
+                {category.name}
+              </p>
+            ))}
+          </div>
         </div>
 
-        <div className="mb-[55px] grid grid-cols-2 justify-items-stretch gap-4 p-2">
+        <div className="mb-[55px] grid grid-cols-2 justify-items-stretch gap-x-12 gap-y-6 px-4 pb-10">
           {filteredItems.map((item) => (
             <MenuCard key={item.id} item={item} />
           ))}
