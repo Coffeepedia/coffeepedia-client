@@ -9,24 +9,25 @@ export default function List({ places, childClicked }) {
   };
 
   useEffect(() => {
-    const refs = Array(places?.length)
-      .fill()
-      .map((_, i) => elRefs[i] || createRef());
-
-    setElRefs(refs);
+    setElRefs((refs) =>
+      Array(places.length)
+        .fill()
+        .map((_, i) => refs[i] || createRef())
+    );
   }, [places]);
 
   return (
     <div>
       {places.map((place, i) => (
         <div
+          ref={elRefs[i]}
           onClick={() => clickHandler(place.place_id)}
           key={i}
           className="pointer-events-auto hover:bg-gray-200"
         >
           <PlaceDetail
             place={place}
-            selected={Number(childClicked) === i}
+            selected={childClicked === place.place_id}
             refProp={elRefs[i]}
           />
         </div>

@@ -212,29 +212,29 @@ export default function CoffeeShopDetailPage() {
         </div>
 
         {/* More Images */}
-        <section class="overflow-hidden text-gray-700">
+        <section className="overflow-hidden text-gray-700">
           <h1 className="text-xl font-semibold text-gray-700">Photos</h1>
-          <div class="container mx-auto py-2 lg:px-32 lg:pt-24">
-            <div class="-m-1 flex flex-wrap md:-m-2">
-              <div class="flex flex-wrap">
-                <div class="w-full p-1 md:p-2">
+          <div className="container mx-auto py-2 lg:px-32 lg:pt-24">
+            <div className="-m-1 flex flex-wrap md:-m-2">
+              <div className="flex flex-wrap">
+                <div className="w-full p-1 md:p-2">
                   <img
                     alt="gallery"
-                    class="block h-full w-full rounded-lg object-cover object-center"
+                    className="block h-full w-full rounded-lg object-cover object-center"
                     src="https://cdn.pixabay.com/photo/2016/03/26/23/23/starbucks-1281880_960_720.jpg"
                   />
                 </div>
-                <div class="w-1/2 p-1 md:p-2">
+                <div className="w-1/2 p-1 md:p-2">
                   <img
                     alt="gallery"
-                    class="block h-full w-full rounded-lg object-cover object-center"
+                    className="block h-full w-full rounded-lg object-cover object-center"
                     src="https://cdn.pixabay.com/photo/2020/08/17/14/37/coffee-5495609_960_720.jpg"
                   />
                 </div>
-                <div class="w-1/2 p-1 md:p-2">
+                <div className="w-1/2 p-1 md:p-2">
                   <img
                     alt="gallery"
-                    class="block h-full w-full rounded-lg object-cover object-center"
+                    className="block h-full w-full rounded-lg object-cover object-center"
                     src="https://cdn.pixabay.com/photo/2020/10/07/12/33/cafe-5635015_960_720.jpg"
                   />
                 </div>

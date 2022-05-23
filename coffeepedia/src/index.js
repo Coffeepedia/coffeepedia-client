@@ -6,20 +6,21 @@ import reportWebVitals from "./reportWebVitals";
 import "flowbite";
 import { ThemeProvider } from "@material-tailwind/react";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store";
+import { ApolloProvider } from "@apollo/client";
+import client from "./config/apolloClient";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <ApolloProvider client={client}>
       <BrowserRouter>
         <ThemeProvider>
           <App />
         </ThemeProvider>
       </BrowserRouter>
-    </Provider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
+
 );
 
 reportWebVitals();

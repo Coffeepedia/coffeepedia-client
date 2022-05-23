@@ -13,21 +13,21 @@ export default function OrderPage() {
   const [childClicked, setChildClicked] = useState(null);
 
   useEffect(() => {
-    //setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
-    navigator.geolocation.getCurrentPosition(
-      ({ coords: { latitude, longitude } }) => {
-        setCoordinates({ lat: latitude, lng: longitude });
-      }
-    );
+    setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
+    // navigator.geolocation.getCurrentPosition(
+    //   ({ coords: { latitude, longitude } }) => {
+    //     setCoordinates({ lat: latitude, lng: longitude });
+    //   }
+    // );
   }, []);
 
   useEffect(() => {
     if (bounds) {
       getPlacesData(bounds.sw, bounds.ne, bounds.center).then((data) => {
-        setPlaces(data);
+        setPlaces(data.filter((place) => place.name && place.rating >= 4));
       });
     }
-  }, [coordinates, bounds]);
+  }, [bounds]);
   return (
     <>
       <div className="container-sm h-full bg-white">

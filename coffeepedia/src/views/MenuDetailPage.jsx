@@ -1,10 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import leftarrow from "../assets/leftarrow.png";
 
 export default function MenuDetailPage() {
+  const navigate = useNavigate();
   return (
     <div className="flex h-full w-full flex-col justify-items-stretch">
       <div className="flex h-[525px] w-full flex-col justify-items-stretch bg-[#1F3933] p-4 shadow-lg ">
-        <img src={leftarrow} alt="" className="h-6 w-6" />
+        <img
+          onClick={() => navigate(-1)}
+          src={leftarrow}
+          alt=""
+          className="h-6 w-6"
+        />
         <div className="flex w-full flex-row items-center justify-between p-2">
           <div>
             <p className="my-1 text-lg font-medium text-white">Cold Coffee</p>
@@ -24,7 +31,7 @@ export default function MenuDetailPage() {
       </div>
       <div className="mt-[-40px] h-[500px] w-full rounded-t-[40px] bg-[#EFEAD8] shadow-lg">
         <div className="flex flex-col items-center">
-          <div class="mt-[-46px] flex h-[92px] w-[92px] flex-row items-center justify-center rounded-full bg-white p-3 shadow-lg hover:bg-[#557B83]">
+          <div className="mt-[-46px] flex h-[92px] w-[92px] flex-row items-center justify-center rounded-full bg-white p-3 shadow-lg hover:bg-[#557B83]">
             <img
               src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
               alt="Coffeepedia Logo"
