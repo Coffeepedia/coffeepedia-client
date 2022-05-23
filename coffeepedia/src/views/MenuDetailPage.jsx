@@ -44,7 +44,7 @@ export default function MenuDetailPage() {
         accesstoken: localStorage.accesstoken,
         addOrderDetailId: data.getItemById.id,
         quantity: 1,
-        orderId: 1,
+        orderId: +localStorage.OrderId,
         name: data.getItemById.name,
         price: updatedPrice,
         imageUrl: data.getItemById.imageUrl,
