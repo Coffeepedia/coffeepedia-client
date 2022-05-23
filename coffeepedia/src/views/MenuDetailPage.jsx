@@ -21,19 +21,32 @@ export default function MenuDetailPage() {
   ] = useMutation(ADD_ORDER_DETAIL);
 
   const [cupSize, setCupSize] = useState("regular");
-  const [updatedPrice, setUpdatedPrice] = useState(null);
+  const [updatedPrice, setUpdatedPrice] = useState(data?.getItemById.price);
+
+  useEffect(() => {
+    setUpdatedPrice(data?.getItemById.price);
+  }, [data?.getItemById.price]);
+
+  useEffect(() => {
+    if (cupSize === "small") {
+      setUpdatedPrice(data?.getItemById.price - 5000);
+    } else if (cupSize === "large") {
+      setUpdatedPrice(data?.getItemById.price + 5000);
+    } else {
+      setUpdatedPrice(data?.getItemById.price);
+    }
+  }, [cupSize]);
 
   const addToOrder = () => {
     console.log("add order detail");
     addOrderDetail({
       variables: {
-        accesstoken:
-          localStorage.accesstoken,
+        accesstoken: localStorage.accesstoken,
         addOrderDetailId: data.getItemById.id,
         quantity: 1,
         orderId: 1,
         name: data.getItemById.name,
-        price: data.getItemById.price,
+        price: updatedPrice,
         imageUrl: data.getItemById.imageUrl,
       },
     });
@@ -128,7 +141,7 @@ export default function MenuDetailPage() {
             <div className="mb-6 flex items-center justify-between border-b-2 border-gray-500">
               <h1 className="text-xl font-semibold">Size Options</h1>
               <h1 className="text-base font-semibold text-gray-500">
-                {formatPrice(data.getItemById.price)}
+                IDR {updatedPrice}
               </h1>
             </div>
             <div className="flex w-full items-baseline px-8">
