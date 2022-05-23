@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@apollo/client";
 import { GET_ITEMS } from "../queries/items";
+import ViewCart from "../components/ViewCart";
 
 export default function HomePage() {
   const categoriesUrl = "http://localhost:4003/categories";
@@ -68,62 +69,45 @@ export default function HomePage() {
   return (
     <div className="h-full min-h-screen w-screen">
       <div
-        className="container-sm h-full bg-[#EFEAD8] p-2"
+        className="container-sm h-full bg-[#EFEAD8]"
         style={{ position: "relative" }}
       >
         <HeaderNav />
-        <div className="px-6">
-          <p className="mb-2 text-2xl font-[700]">Menu</p>
-        </div>
-        <div className="flex w-screen flex-row justify-between overflow-x-auto px-6">
-          <p
-            onClick={() => setSelectedCategoryId(-1)}
-            className={
-              "mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] " +
-              categorySelectorStyle(-1)
-            }
-          >
-            All Item
-          </p>
-          {categories.data.map((category) => (
+        <div className="sticky top-0 mb-6 border-b border-black bg-s-light pb-2">
+          <div className="px-4">
+            <p className="mb-2 text-2xl font-[700]">Menu</p>
+          </div>
+          <div className="flex w-screen flex-row justify-between overflow-x-auto px-4">
             <p
-              key={category.id}
-              onClick={() => setSelectedCategoryId(category.id)}
-              className={`mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] ${categorySelectorStyle(
-                category.id
-              )}`}
+              onClick={() => setSelectedCategoryId(-1)}
+              className={
+                "mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] " +
+                categorySelectorStyle(-1)
+              }
             >
-              {category.name}
+              All Item
             </p>
-          ))}
+            {categories.data.map((category) => (
+              <p
+                key={category.id}
+                onClick={() => setSelectedCategoryId(category.id)}
+                className={`mb-2 mr-4 shrink-0 cursor-pointer text-base font-[500] ${categorySelectorStyle(
+                  category.id
+                )}`}
+              >
+                {category.name}
+              </p>
+            ))}
+          </div>
         </div>
 
-        <div className="mb-[55px] grid grid-cols-2 justify-items-stretch gap-4 p-2">
+        <div className="mb-[55px] grid grid-cols-2 justify-items-stretch gap-x-12 gap-y-6 px-4 pb-10">
           {filteredItems.map((item) => (
             <MenuCard key={item.id} item={item} />
           ))}
         </div>
       </div>
-      <div>
-        <div
-          className="flex h-[65px] w-screen max-w-[620px] items-center justify-center bg-[#D0C9C0]"
-          style={{ position: "fixed", bottom: 0 }}
-        >
-          <button className="flex h-[40px] w-[62%] flex-row items-center justify-between rounded-[20px] bg-[#1F3933] px-4 hover:bg-[#33534B]">
-            <div className="text-white">
-              For item availability, choose a store
-            </div>
-            <div>
-              <img
-                src={search}
-                alt=""
-                className="h-[20px] text-white"
-                style={{ color: "white" }}
-              />
-            </div>
-          </button>
-        </div>
-      </div>
+      <ViewCart />
     </div>
   );
 }

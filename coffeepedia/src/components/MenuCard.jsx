@@ -1,26 +1,37 @@
 import { useNavigate } from "react-router-dom";
+import formatPrice from "../utils/formatPrice";
 
 export default function MenuCard({ item }) {
   const navigate = useNavigate();
+  const createOrder = (ItemId) => {};
   return (
-    <div
-      onClick={() => navigate(`/detail/${item.id}`)}
-      className={"h-[325px] w-[187px] justify-self-center "}
-    >
-      <div className="flex h-[296px] w-[187px] flex-col items-center rounded-[15px] bg-[#9FC088] p-2 shadow-lg">
-        <p className="text-2xl font-semibold text-white">45K</p>
-        <div className="flex h-48 flex-col justify-center">
-          <img src={item.imageUrl} alt="" className="items-center" />
+    <div className={"justify-self-center "}>
+      <div className="flex min-h-[252px] flex-col rounded-xl bg-white shadow-lg">
+        {/* Image */}
+        <div className="flex flex-col justify-center">
+          <img
+            src={item.imageUrl}
+            alt=""
+            className="cursor-pointer items-center rounded-t-xl object-cover"
+            onClick={() => navigate(`/detail/${item.id}`)}
+          />
         </div>
-        <p className="text-l font-semibold text-white">{item.name}</p>
+
+        {/* Description */}
+        <div className="flex grow flex-col justify-between p-2">
+          <p className="text-sm font-bold text-gray-800">{item.name}</p>
+          <p className="text-xs font-semibold text-gray-500">
+            {formatPrice(item.price)}
+          </p>
+        </div>
       </div>
-      <div className="focus:bg mt-[-27px] ml-[37%] flex h-[51px] w-[51px] items-center justify-center rounded-full bg-white p-3 shadow-lg hover:bg-[#557B83] focus:bg-[#689099] focus:outline-none">
+      {/* <div className="focus:bg flex h-[51px] w-[51px] items-center justify-center rounded-full bg-white p-3 shadow-lg hover:bg-[#557B83] focus:bg-[#689099] focus:outline-none">
         <img
           src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
           alt="Coffeepedia Logo"
           className="h-[27px]"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
