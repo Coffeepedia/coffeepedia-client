@@ -26,6 +26,22 @@ export const GET_ORDER_BY_ID = gql`
   }
 `;
 
+export const UPDATE_STATUS_ORDER = gql`
+  mutation UpdateOrder(
+    $updateOrderId: ID
+    $accesstoken: String
+    $status: String
+  ) {
+    UpdateOrder(
+      id: $updateOrderId
+      accesstoken: $accesstoken
+      status: $status
+    ) {
+      message
+    }
+  }
+`;
+
 // ORDER DETAILS
 export const ADD_ORDER_DETAIL = gql`
   mutation AddOrderDetail(
