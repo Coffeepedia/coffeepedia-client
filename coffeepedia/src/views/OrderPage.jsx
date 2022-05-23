@@ -1,6 +1,47 @@
 import leftarrow from "../assets/leftarrow.png";
-
+import { useNavigate } from "react-router-dom";
+import { DO_PATCH_AFTER_PAYMENT, DO_PAYMENT } from "../queries/payments";
+import { useMutation } from "@apollo/client";
 export default function OrderPage() {
+  const navigate = useNavigate();
+
+  const [pay] = useMutation(DO_PAYMENT, {
+    variables: {
+      email: `zozozzzoo@gmail.com`,
+      totalPrice: 11100000,
+      orderId: 56612,
+      accesstoken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJjb2ZmZWVAY29mZmVlcGVkaWEuY29tIiwiaWF0IjoxNjUzMTkzMDQyfQ.Kl6xSezrrfTadzpL5lGvtVYjztKhNL1KsYtwKFOdvdA",
+    },
+    onCompleted: (data) => {
+      window.snap.pay(data.DoPayment.token, {
+        onSuccess: function (result) {
+          update();
+        },
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const [update] = useMutation(DO_PATCH_AFTER_PAYMENT, {
+    variables: {
+      status: `paid`,
+      updateOrderId: 1,
+      accesstoken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJjb2ZmZWVAY29mZmVlcGVkaWEuY29tIiwiaWF0IjoxNjUzMTkzMDQyfQ.Kl6xSezrrfTadzpL5lGvtVYjztKhNL1KsYtwKFOdvdA",
+    },
+    onCompleted: (data) => {
+      if (data.UpdateOrder.message[0] === "Order status updated to paid") {
+        navigate(`/order/1`);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   return (
     <>
       <div className="container-sm h-screen bg-[#EFEAD8]">
@@ -127,7 +168,10 @@ export default function OrderPage() {
               <div className="flex flex-row items-center justify-end gap-x-10 p-4">
                 <div className="basis-1/3 text-2xl font-bold">IDR 105000</div>
                 <div className="basis-1/3">
-                  <button className="h-10 w-[115px] rounded-[30px] bg-[#1F3933] text-lg font-semibold text-white">
+                  <button
+                    className="h-10 w-[115px] rounded-[30px] bg-[#1F3933] text-lg font-semibold text-white"
+                    onClick={pay}
+                  >
                     Order
                   </button>
                 </div>
