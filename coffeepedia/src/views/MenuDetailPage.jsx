@@ -21,19 +21,22 @@ export default function MenuDetailPage() {
   ] = useMutation(ADD_ORDER_DETAIL);
 
   const [cupSize, setCupSize] = useState("regular");
-  const [orderDetail, setOrderDetail] = useState({
-    accesstoken: null,
-    addOrderDetailId: null,
-    orderId: null,
-    quantity: null,
-    name: null,
-    price: null,
-    imageUrl: null,
-  });
+  const [updatedPrice, setUpdatedPrice] = useState(null);
 
   const addToOrder = () => {
     console.log("add order detail");
-    addOrderDetail({ variables: {} });
+    addOrderDetail({
+      variables: {
+        accesstoken:
+          localStorage.accesstoken,
+        addOrderDetailId: data.getItemById.id,
+        quantity: 1,
+        orderId: 1,
+        name: data.getItemById.name,
+        price: data.getItemById.price,
+        imageUrl: data.getItemById.imageUrl,
+      },
+    });
   };
 
   const cupSizeImg = (size) => {
@@ -44,10 +47,11 @@ export default function MenuDetailPage() {
   };
 
   // useEffect(() => {
-  //   if (!loading && data) {
+  //   if (!loading) {
   //     setOrderDetail({
   //       ...orderDetail,
   //       price: data.getItemById.price,
+  //       addOrderDetailId: data.getItemById.id,
   //       orderId: 1,
   //       quantity: 1,
   //       name: data.getItemById.name,
@@ -56,18 +60,18 @@ export default function MenuDetailPage() {
   //   }
   // }, []);
 
-  useEffect(() => {
-    if (!loading && data) {
-      let price = data.getItemById.price;
-      setOrderDetail({ ...orderDetail, price });
-      if (cupSize === "small") {
-        price -= 5000;
-      } else if (cupSize === "large") {
-        price += 5000;
-      }
-      setOrderDetail({ ...orderDetail, price });
-    }
-  }, [cupSize]);
+  // useEffect(() => {
+  //   if (!loading && data) {
+  //     let price = data.getItemById.price;
+  //     setOrderDetail({ ...orderDetail, price });
+  //     if (cupSize === "small") {
+  //       price -= 5000;
+  //     } else if (cupSize === "large") {
+  //       price += 5000;
+  //     }
+  //     setOrderDetail({ ...orderDetail, price });
+  //   }
+  // }, [cupSize]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -191,7 +195,7 @@ export default function MenuDetailPage() {
       {/* Floating button */}
       <button
         onClick={addToOrder}
-        className="fixed bottom-4 right-4 rounded-3xl bg-primary px-6 py-2 text-lg font-bold text-white"
+        className="fixed bottom-20 right-4 rounded-3xl bg-primary px-6 py-2 text-lg font-bold text-white"
       >
         Add to Order
       </button>

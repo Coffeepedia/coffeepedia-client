@@ -1,11 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 export default function ViewCart() {
+  const navigate = useNavigate();
+
   return (
     <div
-      className="flex h-[65px] w-screen max-w-[620px] items-center justify-end bg-s-light border-t-2 border-p-dark px-4"
+      className="flex h-[65px] w-screen max-w-[620px] items-center justify-end  bg-transparent"
       style={{ position: "fixed", bottom: 0 }}
     >
-      <button className="flex h-[40px] flex-row items-center justify-end space-x-4 rounded-[20px] bg-primary px-4 font-semibold hover:bg-[#33534B]">
-        <div className="text-white">View cart (4)</div>
+      <button
+        onClick={() => navigate("/order")}
+        className="flex h-[40px] w-full flex-row items-center justify-center space-x-4 rounded bg-p-dark px-4 font-semibold hover:bg-[#33534B]"
+      >
+        <div className="text-white">View Cart</div>
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
