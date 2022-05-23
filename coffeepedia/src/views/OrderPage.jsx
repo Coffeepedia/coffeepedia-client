@@ -43,7 +43,7 @@ export default function OrderPage() {
 
   const totalPrice = () => {
     let total = 0;
-    data.getOrderById.OrderDetails.forEach((orderItem) => {
+    data?.getOrderById?.OrderDetails?.forEach((orderItem) => {
       total += orderItem.price * orderItem.quantity;
     });
     return total;
@@ -78,7 +78,7 @@ export default function OrderPage() {
       accesstoken: localStorage.accesstoken,
     },
     onCompleted: (data) => {
-      window.snap.pay(data.DoPayment.token, {
+      window.snap.pay(data?.DoPayment.token, {
         onSuccess: function (result) {
           update();
         },
@@ -96,7 +96,7 @@ export default function OrderPage() {
       accesstoken: localStorage.accesstoken,
     },
     onCompleted: (data) => {
-      if (data.UpdateOrder.message[0] === "Order status updated to paid") {
+      if (data?.UpdateOrder.message[0] === "Order status updated to paid") {
         navigate(`/order/1`);
       }
     },
@@ -130,13 +130,17 @@ export default function OrderPage() {
           </div>
           <p className="text-lg font-bold text-white">Pickup Store</p>
           <div className="text-m w-full border-b-2 border-gray-400 bg-[#1F3933] font-medium text-white">
-            {data.getOrderById.CoffeeShopId}
+            {data?.getOrderById?.CoffeeShopId}
           </div>
         </div>
 
         <div className="mb-24 flex flex-col">
           {/* Card */}
-          {[...data.getOrderById.OrderDetails]
+          {[
+            ...(data?.getOrderById?.OrderDetails
+              ? data?.getOrderById?.OrderDetails
+              : []),
+          ]
             .sort((a, b) => a.id - b.id)
             .map((orderItem) => (
               <div key={orderItem.id} className="w-full p-4">
