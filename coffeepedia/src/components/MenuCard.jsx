@@ -3,6 +3,7 @@ import formatPrice from "../utils/formatPrice";
 
 export default function MenuCard({ item }) {
   const navigate = useNavigate();
+  const createOrder = (ItemId) => {};
   return (
     <div className={"justify-self-center "}>
       <div className="flex min-h-[252px] flex-col rounded-xl bg-white shadow-lg">
@@ -22,7 +23,10 @@ export default function MenuCard({ item }) {
           <p className="text-xs font-semibold text-gray-500">
             {formatPrice(item.price)}
           </p>
-          <button className="w-1/2 cursor-pointer self-center rounded-xl border border-primary text-xs font-semibold text-primary">
+          <button
+            onClick={() => createOrder(item.id)}
+            className="mt-2 w-1/2 cursor-pointer self-center rounded-xl border border-primary text-xs font-semibold text-primary"
+          >
             Add
           </button>
         </div>
