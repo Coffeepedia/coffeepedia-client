@@ -30,9 +30,9 @@ export default function OrderTrackingPage() {
   const navigate = useNavigate();
 
   const getTotalPrice = () => {
-    return data.getOrderById.OrderDetails.map((order) => order.price).reduce(
-      (total, price) => total + price
-    );
+    return data.getOrderById.OrderDetails.map(
+      (order) => order.price * order.quantity
+    ).reduce((total, price) => total + price);
   };
 
   const done = (
@@ -144,7 +144,9 @@ export default function OrderTrackingPage() {
                 <span className="text-primary">{order.quantity + "x"}</span>
                 <span className="">{order.name}</span>
               </div>
-              <span className="text-sm font-semibold">IDR {order.price}</span>
+              <span className="text-sm font-semibold">
+                IDR {order.price * order.quantity}
+              </span>
             </div>
           ))}
 
