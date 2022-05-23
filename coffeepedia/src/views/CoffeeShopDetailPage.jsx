@@ -77,7 +77,7 @@ export default function CoffeeShopDetailPage() {
       </button>
 
       {/* Banner Image */}
-      <div className="relative h-[55%]">
+      <div className="relative h-[40%]">
         <img
           src="https://img.freepik.com/free-psd/arrangement-coffee-cup-mock-up_23-2149012045.jpg?t=st=1653194883~exp=1653195483~hmac=2ef071e3900c500339e774de3ef2875ef16d2ce72112c66819f548964fa7f590&w=996"
           alt="coffee shop"
@@ -101,9 +101,14 @@ export default function CoffeeShopDetailPage() {
       </div>
 
       {/* Detail */}
-      <section className="absolute bottom-0 h-1/2 w-full rounded-t-[48px] bg-white px-8 pt-8">
-        <div className="mb-2 text-2xl font-bold text-gray-700">
-          {coffeeShop.name}
+      <section className="absolute bottom-0 h-2/3 w-full rounded-t-[48px] bg-white px-8 pt-8">
+        <div className="flex items-center justify-between">
+          <div className="mb-2 text-2xl font-bold text-gray-700">
+            {coffeeShop.name}
+          </div>
+          <span className="rounded-xl bg-green-300 px-2 py-1 text-[10px] uppercase text-primary">
+            Partner Store
+          </span>
         </div>
 
         <Rating
