@@ -1,24 +1,38 @@
-import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import preparing from "../assets/svg/preparing.svg";
 import sent from "../assets/svg/sent.svg";
+import { GET_ORDER_BY_ID, UPDATE_STATUS_ORDER } from "../queries/orders";
 
 export default function OrderTrackingPage() {
-  const [status, setStatus] = useState("paid");
+  const getOrderByIdVariables = {
+    accesstoken: localStorage.accesstoken,
+    getOrderByIdId: localStorage.OrderId,
+  };
 
-  const orderDetails = [
-    { id: 1, name: "Caffe Americano", quantity: 1, price: 35000 },
-    { id: 2, name: "Caffe Latte", quantity: 2, price: 45000 },
-    { id: 3, name: "Iced Cappuccino", quantity: 2, price: 32000 },
-    { id: 4, name: "Brown Sugar Milk Tea", quantity: 4, price: 34000 },
-  ];
+  const { loading, error, data, refetch } = useQuery(GET_ORDER_BY_ID, {
+    variables: getOrderByIdVariables,
+  });
+
+  useEffect(() => {
+    if (
+      data?.getOrderById.status !== "sent" ||
+      data?.getOrderById.status !== "delivered"
+    ) {
+      setInterval(() => {
+        console.log("terpanggil");
+        refetch();
+      }, 5000);
+    }
+  }, [data?.getOrderById.status]);
 
   const navigate = useNavigate();
 
   const getTotalPrice = () => {
-    return orderDetails
-      .map((order) => order.price)
-      .reduce((total, price) => total + price);
+    return data.getOrderById.OrderDetails.map(
+      (order) => order.price * order.quantity
+    ).reduce((total, price) => total + price);
   };
 
   const done = (
@@ -36,9 +50,27 @@ export default function OrderTrackingPage() {
     </svg>
   );
 
+  const [recieveOrder] = useMutation(UPDATE_STATUS_ORDER);
+
   const handleRecieved = () => {
-    setStatus("delivered");
+    recieveOrder({
+      variables: {
+        updateOrderId: +localStorage.OrderId,
+        accesstoken: localStorage.accesstoken,
+        status: "delivered",
+      },
+    });
   };
+
+  const generateOrderId = () => {
+    return data.getOrderById.id + data.getOrderById.UserId + "CFPDA";
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  } else if (error) {
+    return <p>Error...</p>;
+  }
 
   return (
     <section className="flex h-full min-h-screen w-screen max-w-[620px] flex-col">
@@ -103,7 +135,7 @@ export default function OrderTrackingPage() {
             </div>
           </div>
 
-          {orderDetails.map((order) => (
+          {data.getOrderById.OrderDetails.map((order) => (
             <div
               key={order.id}
               className="mb-2 flex items-center justify-between"
@@ -112,7 +144,9 @@ export default function OrderTrackingPage() {
                 <span className="text-primary">{order.quantity + "x"}</span>
                 <span className="">{order.name}</span>
               </div>
-              <span className="text-sm font-semibold">IDR {order.price}</span>
+              <span className="text-sm font-semibold">
+                IDR {order.price * order.quantity}
+              </span>
             </div>
           ))}
 
@@ -130,7 +164,7 @@ export default function OrderTrackingPage() {
           <div className="mb-4 border-b-2 px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <span className="font-bold text-gray-700">Order ID.</span>
-              <span className="text-gray-400">FDS876543</span>
+              <span className="text-gray-400">{generateOrderId()}</span>
             </div>
           </div>
 
@@ -154,13 +188,13 @@ export default function OrderTrackingPage() {
 
             {/* Ready */}
             <div className="flex space-x-4">
-              {status === "paid" ? (
+              {data.getOrderById.status === "paid" ? (
                 <img
                   src={preparing}
                   alt="preparing"
                   className="z-20 h-8 w-8 p-1"
                 />
-              ) : status === "ready" ? (
+              ) : data.getOrderById.status === "ready" ? (
                 done
               ) : (
                 done
@@ -180,9 +214,10 @@ export default function OrderTrackingPage() {
 
             {/* Sent */}
             <div className="flex space-x-4">
-              {status === "ready" ? (
+              {data.getOrderById.status === "ready" ? (
                 <img src={sent} alt="sent" className="z-20 h-8 w-8 p-1" />
-              ) : status === "sent" || status === "delivered" ? (
+              ) : data.getOrderById.status === "sent" ||
+                data.getOrderById.status === "delivered" ? (
                 done
               ) : (
                 <img
@@ -192,7 +227,11 @@ export default function OrderTrackingPage() {
                 />
               )}
 
-              <div className={status === "paid" ? "opacity-50" : ""}>
+              <div
+                className={
+                  data.getOrderById.status === "paid" ? "opacity-50" : ""
+                }
+              >
                 <h1 className="text-sm font-semibold text-gray-900">
                   Your food is on the way
                 </h1>
@@ -206,9 +245,9 @@ export default function OrderTrackingPage() {
 
             {/* Delivered */}
             <div className="flex space-x-4">
-              {status === "delivered" ? (
+              {data.getOrderById.status === "delivered" ? (
                 done
-              ) : status === "sent" ? (
+              ) : data.getOrderById.status === "sent" ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="z-20 h-8 w-8"
@@ -238,7 +277,10 @@ export default function OrderTrackingPage() {
 
               <div
                 className={
-                  status === "paid" || status === "ready" ? "opacity-50" : ""
+                  data.getOrderById.status === "paid" ||
+                  data.getOrderById.status === "ready"
+                    ? "opacity-50"
+                    : ""
                 }
               >
                 <h1 className="text-sm font-semibold text-gray-900">
@@ -251,7 +293,7 @@ export default function OrderTrackingPage() {
         </div>
 
         {/* Recieve Confirmation Button */}
-        {status === "sent" && (
+        {data.getOrderById.status === "sent" && (
           <button
             onClick={handleRecieved}
             className="w-full rounded-lg bg-primary py-2 font-semibold text-white"

@@ -1,134 +1,236 @@
+import { useMutation, useQuery } from "@apollo/client";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import leftarrow from "../assets/leftarrow.png";
+import {
+  DELETE_ORDER_ITEM,
+  GET_ORDER_BY_ID,
+  PATCH_QUANTITY,
+} from "../queries/orders";
+import { DO_PATCH_AFTER_PAYMENT, DO_PAYMENT } from "../queries/payments";
 
 export default function OrderPage() {
+  const navigate = useNavigate();
+  const getOrderByIdVariables = {
+    accesstoken: localStorage.accesstoken,
+    getOrderByIdId: localStorage.OrderId,
+  };
+
+  const { loading, error, data, refetch } = useQuery(GET_ORDER_BY_ID, {
+    variables: getOrderByIdVariables,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const [patchQuantity] = useMutation(PATCH_QUANTITY, {
+    refetchQueries: [
+      {
+        query: GET_ORDER_BY_ID,
+        variables: getOrderByIdVariables,
+      },
+    ],
+  });
+  const [delOrderItem] = useMutation(DELETE_ORDER_ITEM, {
+    refetchQueries: [
+      {
+        query: GET_ORDER_BY_ID,
+        variables: getOrderByIdVariables,
+      },
+    ],
+  });
+
+  const totalPrice = () => {
+    let total = 0;
+    data?.getOrderById?.OrderDetails?.forEach((orderItem) => {
+      total += orderItem.price * orderItem.quantity;
+    });
+    return total;
+  };
+
+  const updateQuantity = (action, orderItemId, currQty) => {
+    if (action === "decrement" && currQty === 1) {
+      delOrderItem({
+        variables: {
+          accesstoken: localStorage.accesstoken,
+          deleteOrderDetailId: orderItemId,
+        },
+      });
+    } else {
+      patchQuantity({
+        variables: {
+          accesstoken: localStorage.accesstoken,
+          updateOrderDetailId: orderItemId,
+          action: action,
+          quantity: null,
+        },
+      });
+    }
+  };
+
+  // PAYMENT
+  const [pay] = useMutation(DO_PAYMENT, {
+    variables: {
+      email: localStorage.email,
+      totalPrice: totalPrice(),
+      orderId: +localStorage.OrderId,
+      accesstoken: localStorage.accesstoken,
+    },
+    onCompleted: (data) => {
+      window.snap.pay(data?.DoPayment.token, {
+        onSuccess: function (result) {
+          update();
+        },
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const [update] = useMutation(DO_PATCH_AFTER_PAYMENT, {
+    variables: {
+      status: "paid",
+      updateOrderId: localStorage.OrderId,
+      accesstoken: localStorage.accesstoken,
+    },
+    onCompleted: (data) => {
+      if (data?.UpdateOrder.message[0] === "Order status updated to paid") {
+        navigate(`/order/1`);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  if (loading) {
+    return <p>Loading...</p>;
+  } else if (error) {
+    console.log(error);
+    return <p>Error</p>;
+  }
+
   return (
     <>
-      <div className="container-sm h-screen bg-[#EFEAD8]">
+      <div className="container-sm h-full min-h-screen bg-[#EFEAD8]">
+        {/* Header */}
         <div className="h-[165px] bg-[#1F3933] p-4">
           <div className="mb-4 grid grid-cols-10">
-            <img src={leftarrow} alt="" className="h-6 w-6" />
+            <img
+              onClick={() => navigate(-1)}
+              src={leftarrow}
+              alt=""
+              className="h-6 w-6 cursor-pointer"
+            />
             <p className="col-span-9 mt-[-6px] text-2xl font-semibold text-white">
               Your Order
             </p>
           </div>
-          <p className="mb-2 text-lg text-white">Pickup Store</p>
-          <select
-            id="countries"
-            className="text-m w-full rounded-lg bg-[#1F3933] p-2.5 font-medium text-white"
-          >
-            <option selected>Citraraya Tangerang - 1 km</option>
-            <option value="US">United States</option>
-            <option value="CA">Canada</option>
-            <option value="FR">France</option>
-            <option value="DE">Germany</option>
-          </select>
-        </div>
-        <div className="mb-[60px] flex flex-col">
-          <div className="h-[175px] w-full p-4">
-            <div className="h-full w-full rounded-2xl bg-white">
-              <div className="grid grid-cols-3 gap-4 p-3">
-                <div className="...">
-                  <img
-                    src="https://globalassets.starbucks.com/assets/ff03ead58dde47c485049baa5f736793.jpg?impolicy=1by1_wide_topcrop_630"
-                    alt=""
-                    className="h-[120px] rounded-2xl"
-                  />
-                </div>
-                <div className="... col-span-2">
-                  <p className="text-2xl font-bold">Cappuccino</p>
-                  <p className="font-semibold">Grande</p>
-                  <p className="font-semibold">IDR 35000</p>
-                  <div className="bg-cyan mt-2 flex flex-row items-center">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/992/992651.png"
-                      alt=""
-                      className="h-4 w-4"
-                    />
-                    <p className="mx-2">1</p>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/992/992683.png"
-                      alt=""
-                      className="h-4 w-4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="h-[175px] w-full p-4">
-            <div className="h-full w-full rounded-2xl bg-white">
-              <div className="grid grid-cols-3 gap-4 p-3">
-                <div className="...">
-                  <img
-                    src="https://globalassets.starbucks.com/assets/ff03ead58dde47c485049baa5f736793.jpg?impolicy=1by1_wide_topcrop_630"
-                    alt=""
-                    className="h-[120px] rounded-2xl"
-                  />
-                </div>
-                <div className="... col-span-2">
-                  <p className="text-2xl font-bold">Cappuccino</p>
-                  <p className="font-semibold">Grande</p>
-                  <p className="font-semibold">IDR 35000</p>
-                  <div className="bg-cyan mt-2 flex flex-row items-center">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/992/992651.png"
-                      alt=""
-                      className="h-4 w-4"
-                    />
-                    <p className="mx-2">1</p>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/992/992683.png"
-                      alt=""
-                      className="h-4 w-4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="h-[175px] w-full p-4">
-            <div className="h-full w-full rounded-2xl bg-white">
-              <div className="grid grid-cols-3 gap-4 p-3">
-                <div>
-                  <img
-                    src="https://globalassets.starbucks.com/assets/ff03ead58dde47c485049baa5f736793.jpg?impolicy=1by1_wide_topcrop_630"
-                    alt=""
-                    className="h-[120px] rounded-2xl"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <p className="text-2xl font-bold">Cappuccino</p>
-                  <p className="font-semibold">Grande</p>
-                  <p className="font-semibold">IDR 35000</p>
-                  <div className="bg-cyan mt-2 flex flex-row items-center">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/992/992651.png"
-                      alt=""
-                      className="h-4 w-4"
-                    />
-                    <p className="mx-2">1</p>
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/992/992683.png"
-                      alt=""
-                      className="h-4 w-4"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          <p className="text-lg font-bold text-white">Pickup Store</p>
+          <div className="text-m w-full border-b-2 border-gray-400 bg-[#1F3933] font-medium text-white">
+            {data?.getOrderById?.CoffeeShopId}
           </div>
         </div>
-        <div className="flex flex-col ">
+
+        <div className="mb-24 flex flex-col">
+          {/* Card */}
+          {[
+            ...(data?.getOrderById?.OrderDetails
+              ? data?.getOrderById?.OrderDetails
+              : []),
+          ]
+            .sort((a, b) => a.id - b.id)
+            .map((orderItem) => (
+              <div key={orderItem.id} className="w-full p-4">
+                <div className="h-full w-full rounded-2xl bg-white">
+                  <div className="grid grid-cols-3 gap-4 p-3">
+                    <div className="...">
+                      <img
+                        src={orderItem.imageUrl}
+                        alt={orderItem.name}
+                        className="rounded-2xl object-cover"
+                      />
+                    </div>
+                    <div className="... col-span-2">
+                      <p className="text-lg font-bold">{orderItem.name}</p>
+                      <p className="text-sm font-semibold">Grande</p>
+                      <p className="text-sm font-semibold">
+                        IDR {orderItem.price}
+                      </p>
+
+                      {/* Quantity */}
+                      <div className="bg-cyan mt-2 flex flex-row items-center">
+                        <svg
+                          onClick={() =>
+                            updateQuantity(
+                              "decrement",
+                              orderItem.id,
+                              orderItem.quantity
+                            )
+                          }
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 cursor-pointer stroke-primary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <p className="mx-4 font-semibold">
+                          {orderItem.quantity}
+                        </p>
+
+                        <svg
+                          onClick={() =>
+                            updateQuantity(
+                              "increment",
+                              orderItem.id,
+                              orderItem.quantity
+                            )
+                          }
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 cursor-pointer stroke-primary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div className="flex flex-col">
           <div
-            className="h-[100px] w-screen max-w-[620px] p-4 "
+            className="h-[100px] w-screen max-w-[620px]"
             style={{ position: "fixed", bottom: 0 }}
           >
-            <div className="h-full w-full rounded-[30px] bg-white">
-              <div className="flex flex-row items-center justify-end gap-x-10 p-4">
-                <div className="basis-1/3 text-2xl font-bold">IDR 105000</div>
-                <div className="basis-1/3">
-                  <button className="h-10 w-[115px] rounded-[30px] bg-[#1F3933] text-lg font-semibold text-white">
-                    Order
+            <div className="w-full rounded bg-p-dark">
+              <div className="flex flex-row items-center justify-between p-4">
+                <div className="grow text-center text-2xl font-bold text-white">
+                  IDR {totalPrice()}
+                </div>
+                <div className="">
+                  <button
+                    onClick={pay}
+                    className="h-10 w-[115px] rounded-[30px] bg-primary text-lg font-semibold text-white"
+                  >
+                    Checkout
                   </button>
                 </div>
               </div>

@@ -5,6 +5,7 @@ export default function Rating({ rating, totalReviews }) {
         if (rate <= rating) {
           return (
             <svg
+              key={rate}
               className="h-5 w-5 text-yellow-400"
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -16,6 +17,7 @@ export default function Rating({ rating, totalReviews }) {
         } else {
           return (
             <svg
+              key={rate}
               className="h-5 w-5 text-gray-300 dark:text-gray-500"
               fill="currentColor"
               viewBox="0 0 20 20"
