@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import leftarrow from "../assets/leftarrow.png";
+import ViewCart from "../components/ViewCart";
 import { GET_ITEM_BY_ID } from "../queries/items";
 import { ADD_ORDER_DETAIL } from "../queries/orders";
 import formatPrice from "../utils/formatPrice";
@@ -32,6 +33,7 @@ export default function MenuDetailPage() {
 
   const addToOrder = () => {
     console.log("add order detail");
+    addOrderDetail({ variables: {} });
   };
 
   const cupSizeImg = (size) => {
@@ -41,11 +43,18 @@ export default function MenuDetailPage() {
     return require("../assets/coffee-cup.png");
   };
 
-  useEffect(() => {
-    if (!loading && data) {
-      setOrderDetail({ ...orderDetail, price: data.getItemById.price });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!loading && data) {
+  //     setOrderDetail({
+  //       ...orderDetail,
+  //       price: data.getItemById.price,
+  //       orderId: 1,
+  //       quantity: 1,
+  //       name: data.getItemById.name,
+  //       imageUrl: data.getItemById.imageUrl,
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (!loading && data) {
@@ -69,14 +78,30 @@ export default function MenuDetailPage() {
   return (
     <div className="flex h-full min-h-screen w-full flex-col justify-items-stretch">
       {/* Header */}
-      <div className="flex h-1/2 w-full flex-col justify-items-stretch bg-[#1F3933] p-4 shadow-lg ">
+      <div className="flex items-center justify-between bg-p-dark px-4 py-4">
         <img
           onClick={() => navigate(-1)}
           src={leftarrow}
           alt="left arrow"
           className="h-6 w-6 cursor-pointer"
         />
-        <div className="flex w-full flex-row items-center justify-center p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8 fill-gray-500"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </div>
+
+      {/* Item Image */}
+      <div className="flex h-1/2 w-full flex-col justify-items-stretch bg-[#1F3933] pb-4 shadow-lg">
+        <div className="flex w-full flex-row items-center justify-center">
           <p className="text-3xl font-bold text-white">
             {data.getItemById.name}
           </p>
@@ -85,24 +110,14 @@ export default function MenuDetailPage() {
         <div className="flex flex-row items-center justify-center">
           <img
             src={data.getItemById.imageUrl}
-            alt=""
-            className="h-72 w-64 p-2"
+            alt={data.getItemById.name}
+            className="h-64 w-64 rounded-lg object-cover"
           />
         </div>
       </div>
 
       <div className="-my-8 h-full w-full rounded-t-[40px] bg-[#EFEAD8] shadow-lg">
-        {/* Button Add to Order */}
-        {/* <div className="flex flex-col items-center">
-          <div className="flex h-[92px] w-[92px] flex-row items-center justify-center rounded-full bg-white p-3 shadow-lg hover:bg-[#557B83]">
-            <img
-              src="https://cdn-icons-png.flaticon.com/128/2169/2169842.png"
-              alt="Coffeepedia Logo"
-              className="h-[50px]"
-            />
-          </div>
-        </div> */}
-
+        {/* Details */}
         <div className="flex w-full flex-col items-start p-5">
           {/* Size options */}
           <div className="mb-10 w-full">
@@ -148,13 +163,14 @@ export default function MenuDetailPage() {
             </div>
           </div>
 
+          {/* Description */}
           <div className="w-full">
             <div className="text-xl font-semibold"></div>
             <div className="mt-2 h-full w-full rounded-[10px] border-2 border-black p-2">
               <p className="mt-[-30px] w-1/3 bg-[#EFEAD8] p-2 font-semibold text-gray-700">
                 Description
               </p>
-              <div className="text-justify font-medium">
+              <div className="px-1 text-justify font-medium">
                 {data.getItemById.description}
               </div>
             </div>
@@ -179,6 +195,9 @@ export default function MenuDetailPage() {
       >
         Add to Order
       </button>
+
+      {/* Cart */}
+      <ViewCart />
     </div>
   );
 }

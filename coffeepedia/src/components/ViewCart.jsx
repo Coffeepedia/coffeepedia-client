@@ -1,7 +1,7 @@
 export default function ViewCart() {
   return (
     <div
-      className="flex h-[65px] w-screen max-w-[620px] items-center justify-end bg-transparent px-4"
+      className="flex h-[65px] w-screen max-w-[620px] items-center justify-end bg-s-light border-t-2 border-p-dark px-4"
       style={{ position: "fixed", bottom: 0 }}
     >
       <button className="flex h-[40px] flex-row items-center justify-end space-x-4 rounded-[20px] bg-primary px-4 font-semibold hover:bg-[#33534B]">
