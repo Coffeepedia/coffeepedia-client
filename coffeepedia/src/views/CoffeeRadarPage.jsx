@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import leftarrow from "../assets/leftarrow.png";
 import Map from "../components/CoffeeRadar/Map";
-
+import { getCoffeesData } from "../api/coffeeShops";
 import List from "../components/CoffeeRadar/List";
 import { getPlacesData } from "../api";
 import SearchBar from "../components/CoffeeRadar/SearchBar";
 
 export default function OrderPage() {
+  const [coffees, setCoffees] = useState([]);
   const [places, setPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState(null);
@@ -19,6 +20,9 @@ export default function OrderPage() {
     //     setCoordinates({ lat: latitude, lng: longitude });
     //   }
     // );
+    getCoffeesData().then((data) => {
+      setCoffees(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -44,6 +48,7 @@ export default function OrderPage() {
           {/* Google Map */}
           <div className="h-[600px] w-full">
             <Map
+              coffees={coffees}
               setCoordinates={setCoordinates}
               setBounds={setBounds}
               coordinates={coordinates}

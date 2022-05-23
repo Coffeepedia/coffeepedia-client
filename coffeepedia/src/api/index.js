@@ -10,7 +10,6 @@ export const getPlacesData = async (sw, ne, center) => {
         longitude: sw.lng + (center.lng - sw.lng),
       },
     });
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
