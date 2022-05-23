@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Pricing from "../components/Pricing";
 import Rating from "../components/Rating";
+import { ADD_ORDER } from "../queries/orders";
+import { useMutation } from "@apollo/client";
 
 export default function CoffeeShopDetailPage() {
+  const { id } = useParams();
   const coffeeShop = {
     business_status: "OPERATIONAL",
     geometry: {
@@ -67,12 +70,31 @@ export default function CoffeeShopDetailPage() {
     </span>
   );
 
+  const [addOrder] = useMutation(ADD_ORDER, {
+    onCompleted: (data) => {
+      localStorage.setItem("OrderId", data.AddOrder.Order.id);
+      navigate(`/menu`);
+    },
+  });
+
   const navigate = useNavigate();
+
+  const orderMenuHandler = () => {
+    addOrder({
+      variables: {
+        addOrderId: id,
+        accesstoken: localStorage.accesstoken,
+      },
+    });
+  };
 
   return (
     <section className="relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col items-center">
       {/* Floating button */}
-      <button className="fixed bottom-0 right-0 z-10 m-4 rounded-3xl  bg-primary px-6 py-2 font-bold text-white shadow-2xl">
+      <button
+        onClick={orderMenuHandler}
+        className="fixed bottom-0 right-0 z-10 m-4 rounded-3xl  bg-primary px-6 py-2 font-bold text-white shadow-2xl"
+      >
         Order
       </button>
 

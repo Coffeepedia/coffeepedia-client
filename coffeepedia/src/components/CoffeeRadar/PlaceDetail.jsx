@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 export default function PlaceDetail({ place, selected, refProp, coffees }) {
+  const navigate = useNavigate();
   const clickHandler = (data) => {
-    console.log(data);
+    navigate(`/coffeeshops/${data}`);
   };
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
