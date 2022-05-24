@@ -20,7 +20,7 @@ export default function Map({
       }}
       defaultCenter={coordinates}
       center={coordinates}
-      defaultZoom={14}
+      defaultZoom={15}
       margin={[50, 50, 50, 50]}
       options={{
         disableDefaultUI: true,
