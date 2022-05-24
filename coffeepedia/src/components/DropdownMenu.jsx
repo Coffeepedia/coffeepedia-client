@@ -84,9 +84,18 @@ export default function DropdownMenu() {
             </li>
           ))}
           <li className="mt-2 border-t pb-3 pt-2 text-lg font-semibold">
-            <span onClick={logout} className="cursor-pointer text-gray-800">
-              Logout
-            </span>
+            {localStorage.accesstoken ? (
+              <span onClick={logout} className="cursor-pointer text-gray-800">
+                Logout
+              </span>
+            ) : (
+              <span
+                onClick={() => navigate("/login")}
+                className="cursor-pointer text-gray-800"
+              >
+                Login
+              </span>
+            )}
           </li>
         </ul>
       </div>

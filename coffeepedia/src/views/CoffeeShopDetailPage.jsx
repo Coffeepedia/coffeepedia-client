@@ -5,7 +5,6 @@ import Rating from "../components/Rating";
 import { ADD_ORDER } from "../queries/orders";
 import { useMutation } from "@apollo/client";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 
 export default function CoffeeShopDetailPage() {
@@ -42,13 +41,7 @@ export default function CoffeeShopDetailPage() {
       Closed
     </span>
   );
-
-  useEffect(() => {
-    getCoffeeDetail(id).then((data) => {
-      setCoffee(data);
-    });
-  }, []);
-
+  
   const [addOrder] = useMutation(ADD_ORDER, {
     onCompleted: (data) => {
       localStorage.setItem("OrderId", data.AddOrder.Order.id);
@@ -59,12 +52,16 @@ export default function CoffeeShopDetailPage() {
   const navigate = useNavigate();
 
   const orderMenuHandler = () => {
-    addOrder({
-      variables: {
-        addOrderId: id,
-        accesstoken: localStorage.accesstoken,
-      },
-    });
+    if (localStorage.getItem("accesstoken")) {
+      addOrder({
+        variables: {
+          addOrderId: id,
+          accesstoken: localStorage.accesstoken,
+        },
+      });
+    } else {
+      navigate("/login");
+    }
   };
 
   if (loading) {
@@ -74,7 +71,7 @@ export default function CoffeeShopDetailPage() {
   }
 
   return (
-    <section className="relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col items-center">
+    <section className="items-center relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col">
       {/* Floating button */}
       <button
         onClick={orderMenuHandler}
@@ -111,9 +108,9 @@ export default function CoffeeShopDetailPage() {
 
       {/* Detail */}
       <section className="absolute bottom-0 h-2/3 w-full rounded-t-[48px] bg-white px-8 pt-8">
-        <div className="flex items-center justify-between">
+        <div className="items-center flex justify-between">
           <div className="mb-2 text-2xl font-bold text-gray-700">
-            {coffee.name}
+            {coffeeShop.name}
           </div>
           <span className="rounded-xl bg-green-300 px-2 py-1 text-[10px] uppercase text-primary">
             Partner
@@ -121,8 +118,8 @@ export default function CoffeeShopDetailPage() {
         </div>
 
         <Rating
-          rating={coffee.rating}
-          totalReviews={coffee.user_ratings_total}
+          rating={coffeeShop.rating}
+          totalReviews={coffeeShop.user_ratings_total}
         />
 
         {/* Location */}
@@ -139,13 +136,13 @@ export default function CoffeeShopDetailPage() {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-gray-700">{coffee.vicinity}</span>
+          <span className="text-gray-700">{coffeeShop.vicinity}</span>
         </div>
 
         {/* Additional Detail Bar */}
         <div className="mb-6 flex flex-col">
           {/* Head */}
-          <div className="flex items-center pb-2">
+          <div className="items-center flex pb-2">
             {/* Travel time */}
             <span className="basis-1/5 text-center text-xs font-semibold text-gray-700">
               Pricing
@@ -169,9 +166,9 @@ export default function CoffeeShopDetailPage() {
           </div>
 
           {/* Row */}
-          <div className="flex items-center">
+          <div className="items-center flex">
             <div className="basis-1/5 text-center">
-              {<Pricing priceLevel={coffee.price_level} />}
+              {<Pricing priceLevel={coffeeShop.price_level} />}
             </div>
 
             <span className="basis-1/5 text-center text-xs font-semibold">

@@ -6,7 +6,6 @@ import preparing from "../assets/svg/preparing.svg";
 import sent from "../assets/svg/sent.svg";
 import DropdownMenu from "../components/DropdownMenu";
 import Loading from "../components/Loading";
-import { GET_COFFEE_SHOP_BY_ID } from "../queries/coffeeShops";
 import { GET_ORDER_BY_ID, UPDATE_STATUS_ORDER } from "../queries/orders";
 
 export default function OrderTrackingPage() {
@@ -89,7 +88,7 @@ export default function OrderTrackingPage() {
   }
 
   return (
-    <section className="flex h-full min-h-screen w-screen max-w-[620px] flex-col">
+    <section className="flex h-screen min-h-screen w-screen max-w-[620px] flex-col">
       <DropdownMenu />
       {/* Top Half */}
       <section className="min-h-1/2 h-1/2 w-full bg-p-dark">

@@ -5,6 +5,7 @@ import altphotos from "../../assets/altphotos.png";
 export default function PlaceDetail({ place, selected, refProp, coffees }) {
   const navigate = useNavigate();
   const apiVicto = "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c";
+  console.log(apiVicto);
   const url = `https://maps.googleapis.com/maps/api/place/photo?photo_reference=${place?.photos?.[0]?.photo_reference}&maxwidth=620&key=${apiVicto}`;
   const clickHandler = (data) => {
     navigate(`/coffeeshops/${data}`);
@@ -19,7 +20,7 @@ export default function PlaceDetail({ place, selected, refProp, coffees }) {
           className="grid grid-cols-4 p-4 shadow-lg"
         >
           <div className="col-span-3 self-center">
-            <div className="row m-x-4 flex flex items-center">
+            <div className="row m-x-4 items-center flex">
               <p className="mr-2 text-base font-semibold">{place.name}</p>
               <div className="p-2 ">
                 <button className="cursor-default rounded-lg bg-green-300 py-1 px-2 text-xs font-semibold uppercase text-green-600">
@@ -52,7 +53,7 @@ export default function PlaceDetail({ place, selected, refProp, coffees }) {
       ) : (
         <div className="grid grid-cols-4 p-4 shadow-lg">
           <div className="col-span-3 self-center">
-            <div className="row m-x-4 flex flex items-center justify-between">
+            <div className="row m-x-4 items-center flex justify-between">
               <p className="text-base font-semibold">{place.name}</p>
               <div className="p-2 "></div>
             </div>
