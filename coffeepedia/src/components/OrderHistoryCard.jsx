@@ -1,10 +1,12 @@
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { GET_COFFEE_SHOP_BY_ID } from "../queries/coffeeShops";
 import DropdownMenu from "./DropdownMenu";
 import LoadingSmall from "./LoadingSmall";
 
 export default function OrderHistoryCard({ order }) {
+  const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_COFFEE_SHOP_BY_ID, {
     variables: {
       placeId: order.CoffeeShopId,
@@ -13,7 +15,10 @@ export default function OrderHistoryCard({ order }) {
 
   const [rating, setRating] = useState({});
   return (
-    <div className="mb-2 bg-white p-4">
+    <div
+      onClick={() => navigate(`/order/${order.id}`)}
+      className="mb-2 cursor-pointer bg-white p-4"
+    >
       {/* Header */}
       <div className="flex justify-between">
         {/* Timestamp */}

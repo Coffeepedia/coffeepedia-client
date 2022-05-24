@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DropdownMenu from "../components/DropdownMenu";
 import Loading from "../components/Loading";
 import OrderHistoryCard from "../components/OrderHistoryCard";
 import { GET_ALL_ORDER } from "../queries/orders";
 
 export default function OrderHistoryPage() {
-  // const [orders, setOrders] = useState([]);
   const { loading, error, data, refetch } = useQuery(GET_ALL_ORDER, {
     variables: {
       accesstoken: localStorage.accesstoken,
