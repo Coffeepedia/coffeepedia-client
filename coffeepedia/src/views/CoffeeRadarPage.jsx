@@ -5,6 +5,7 @@ import { getCoffeesData } from "../api/coffeeShops";
 import List from "../components/CoffeeRadar/List";
 import { getPlacesData } from "../api";
 import SearchBar from "../components/CoffeeRadar/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderPage() {
   const [coffees, setCoffees] = useState([]);
@@ -12,6 +13,7 @@ export default function OrderPage() {
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState(null);
   const [childClicked, setChildClicked] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
@@ -37,7 +39,12 @@ export default function OrderPage() {
       <div className="container-sm h-full bg-white">
         <div className="h-[80px] bg-[#1F3933] p-4">
           <div className="mb-4 mt-3 grid grid-cols-10">
-            <img src={leftarrow} alt="" className="h-6 w-6" />
+            <img
+              onClick={() => navigate("/")}
+              src={leftarrow}
+              alt=""
+              className="h-6 w-6"
+            />
             <p className="col-span-9 mt-[-6px] text-2xl font-semibold text-white">
               Store
             </p>

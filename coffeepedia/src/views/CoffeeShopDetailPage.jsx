@@ -1,11 +1,14 @@
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Pricing from "../components/Pricing";
 import Rating from "../components/Rating";
 import { ADD_ORDER } from "../queries/orders";
 import { useMutation } from "@apollo/client";
+import { getCoffeeDetail } from "../api/coffeeDetail";
 
 export default function CoffeeShopDetailPage() {
   const { id } = useParams();
+  const [coffee, setCoffee] = useState({});
   const coffeeShop = {
     business_status: "OPERATIONAL",
     geometry: {
@@ -70,6 +73,12 @@ export default function CoffeeShopDetailPage() {
     </span>
   );
 
+  useEffect(() => {
+    getCoffeeDetail(id).then((data) => {
+      setCoffee(data);
+    });
+  }, []);
+
   const [addOrder] = useMutation(ADD_ORDER, {
     onCompleted: (data) => {
       localStorage.setItem("OrderId", data.AddOrder.Order.id);
@@ -99,11 +108,15 @@ export default function CoffeeShopDetailPage() {
       </button>
 
       {/* Banner Image */}
-      <div className="relative h-[40%]">
+      <div className="relative h-[40%] ">
         <img
-          src="https://img.freepik.com/free-psd/arrangement-coffee-cup-mock-up_23-2149012045.jpg?t=st=1653194883~exp=1653195483~hmac=2ef071e3900c500339e774de3ef2875ef16d2ce72112c66819f548964fa7f590&w=996"
+          src={
+            coffee.photos[0]
+              ? coffee.photos[0] + "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+              : []
+          }
           alt="coffee shop"
-          className="h-full object-cover"
+          className="h-full w-full object-cover"
         />
         <svg
           onClick={() => navigate(-1)}
@@ -126,7 +139,7 @@ export default function CoffeeShopDetailPage() {
       <section className="absolute bottom-0 h-2/3 w-full rounded-t-[48px] bg-white px-8 pt-8">
         <div className="flex items-center justify-between">
           <div className="mb-2 text-2xl font-bold text-gray-700">
-            {coffeeShop.name}
+            {coffee.name}
           </div>
           <span className="rounded-xl bg-green-300 px-2 py-1 text-[10px] uppercase text-primary">
             Partner Store
@@ -134,8 +147,8 @@ export default function CoffeeShopDetailPage() {
         </div>
 
         <Rating
-          rating={coffeeShop.rating}
-          totalReviews={coffeeShop.user_ratings_total}
+          rating={coffee.rating}
+          totalReviews={coffee.user_ratings_total}
         />
 
         {/* Location */}
@@ -152,7 +165,7 @@ export default function CoffeeShopDetailPage() {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-gray-700">{coffeeShop.vicinity}</span>
+          <span className="text-gray-700">{coffee.vicinity}</span>
         </div>
 
         {/* Additional Detail Bar */}
@@ -184,11 +197,11 @@ export default function CoffeeShopDetailPage() {
           {/* Row */}
           <div className="flex items-center">
             <div className="basis-1/5 text-center">
-              <Pricing priceLevel={coffeeShop.price_level} />
+              {<Pricing priceLevel={coffee.price_level} />}
             </div>
 
             <span className="basis-1/5 text-center text-xs font-semibold">
-              {coffeeShop.opening_hours.open_now ? <Open /> : <Closed />}
+              {coffee?.opening_hours?.open_now ? <Open /> : <Closed />}
             </span>
 
             <span className="flex basis-1/5 justify-center text-center text-xs font-semibold text-primary">
@@ -244,25 +257,46 @@ export default function CoffeeShopDetailPage() {
           <div className="container mx-auto py-2 lg:px-32 lg:pt-24">
             <div className="-m-1 flex flex-wrap md:-m-2">
               <div className="flex flex-wrap">
+                {/* {coffee.photos?.map((photo) => (
+                  <div className="w-full p-1 md:p-2">
+                    <img
+                      alt="gallery"
+                      className="block h-full w-full rounded-lg object-cover object-center"
+                      src={photo + "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"}
+                    />
+                  </div>
+                ))} */}
                 <div className="w-full p-1 md:p-2">
                   <img
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
-                    src="https://cdn.pixabay.com/photo/2016/03/26/23/23/starbucks-1281880_960_720.jpg"
+                    src={
+                      coffee.photos[1] &&
+                      coffee?.photos[1] +
+                        "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                    }
                   />
                 </div>
                 <div className="w-1/2 p-1 md:p-2">
                   <img
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
-                    src="https://cdn.pixabay.com/photo/2020/08/17/14/37/coffee-5495609_960_720.jpg"
+                    src={
+                      coffee.photos[2] &&
+                      coffee.photos[2] +
+                        "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                    }
                   />
                 </div>
                 <div className="w-1/2 p-1 md:p-2">
                   <img
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
-                    src="https://cdn.pixabay.com/photo/2020/10/07/12/33/cafe-5635015_960_720.jpg"
+                    src={
+                      coffee.photos[3] &&
+                      coffee?.photos[3] +
+                        "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                    }
                   />
                 </div>
               </div>
