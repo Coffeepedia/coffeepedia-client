@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { GET_ARTICLES } from "../queries/articles";
 import ArticleList from "./ArticleList";
+import Loading from "./Loading";
 
 export default function ArticleFeed() {
   const { loading, error, data } = useQuery(GET_ARTICLES);
@@ -11,7 +12,7 @@ export default function ArticleFeed() {
     <section className="min-h-screen bg-s-light">
       {/* Header */}
       {loading ? (
-        <p>Loading ... </p>
+        <Loading />
       ) : (
         <>
           <header className="sticky top-0 z-10 bg-p-dark shadow-md">
@@ -66,7 +67,7 @@ export default function ArticleFeed() {
               {data.getAllArticle.slice(0, 3).map((article) => (
                 <div
                   key={article._id}
-                  onClick={() => navigate(`/articles/${article.id}`)}
+                  onClick={() => navigate(`/articles/${article._id}`)}
                   className="mb-6 inline-block w-4/5 shrink-0 cursor-pointer snap-center "
                 >
                   <div className="relative overflow-hidden rounded-2xl">
@@ -111,7 +112,7 @@ export default function ArticleFeed() {
           </section>
 
           {/* Article List */}
-          <ArticleList articles={data.getAllArticle} />
+          <ArticleList articles={data.getAllArticle.slice(3)} />
         </>
       )}
     </section>
