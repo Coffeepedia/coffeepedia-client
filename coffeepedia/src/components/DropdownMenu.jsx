@@ -12,15 +12,24 @@ export default function DropdownMenu() {
 
   const navigate = useNavigate();
 
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login", { replace: true });
+  };
+
   return (
     <div className="fixed top-0 left-0 z-50 w-full shadow-md">
       <div className="items-center bg-white py-4 px-4 ">
-        <div
-          onClick={() => navigate("/")}
-          className="items-center flex cursor-pointer text-2xl font-bold text-gray-800"
-        >
-          <span className="text-2xl text-[#6F4E37]">Coffee</span>
-          <span className="text-2xl text-primary">pedia</span>
+        <div className="items-center flex cursor-pointer text-2xl font-bold text-gray-800">
+          <span
+            onClick={() => navigate("/")}
+            className="text-2xl text-[#6F4E37]"
+          >
+            Coffee
+          </span>
+          <span onClick={() => navigate("/")} className="text-2xl text-primary">
+            pedia
+          </span>
         </div>
 
         <div
@@ -74,6 +83,11 @@ export default function DropdownMenu() {
               </Link>
             </li>
           ))}
+          <li className="mt-2 border-t pb-3 pt-2 text-lg font-semibold">
+            <span onClick={logout} className="cursor-pointer text-gray-800">
+              Logout
+            </span>
+          </li>
         </ul>
       </div>
     </div>
