@@ -92,3 +92,41 @@ export const DELETE_ORDER_ITEM = gql`
     }
   }
 `;
+
+export const ADD_ORDER = gql`
+  mutation AddOrder($addOrderId: String, $accesstoken: String) {
+    AddOrder(id: $addOrderId, accesstoken: $accesstoken) {
+      message
+      User {
+        id
+        email
+        password
+        username
+        phoneNumber
+        address
+        balance
+        accesstoken
+      }
+      Order {
+        id
+        UserId
+        CoffeeShopId
+        status
+        createdAt
+        updatedAt
+        OrderDetails {
+          id
+          ItemId
+          OrderId
+          name
+          price
+          quantity
+          imageUrl
+          createdAt
+          updatedAt
+        }
+        errorText
+      }
+    }
+  }
+`;
