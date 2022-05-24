@@ -1,33 +1,84 @@
 import { useNavigate } from "react-router-dom";
+import MapRating from "../MapRating";
+import altphotos from "../../assets/altphotos.png";
 
 export default function PlaceDetail({ place, selected, refProp, coffees }) {
   const navigate = useNavigate();
+  const apiVicto = "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c";
+  const url = `https://maps.googleapis.com/maps/api/place/photo?photo_reference=${place?.photos?.[0]?.photo_reference}&maxwidth=620&key=${apiVicto}`;
   const clickHandler = (data) => {
     navigate(`/coffeeshops/${data}`);
   };
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   return (
-    <div className="grid grid-cols-4 p-4">
-      <div className="col-span-3 self-center">
-        <p className="text-lg font-semibold">{place.name}</p>
-        <p>{place.vicinity}</p>
-        <p>{place.rating}</p>
-      </div>
-      <div className="self-center justify-self-end">
-        <div className="p-2 ">
-          {coffees
-            ?.filter((e) => e.place_id === place.place_id)
-            .map((coffee) => (
-              <button
-                onClick={() => clickHandler(place.place_id)}
-                className="h-8 w-24 rounded-lg bg-green-600 text-xs text-white shadow-lg"
-              >
-                Coffeeshop Partner
-              </button>
-            ))}
+    <>
+      {coffees.map((e) => e.place_id).includes(place.place_id) ? (
+        <div
+          onClick={() => clickHandler(place.place_id)}
+          className="grid grid-cols-4 p-4 shadow-lg"
+        >
+          <div className="col-span-3 self-center">
+            <div className="row m-x-4 flex flex items-center">
+              <p className="mr-2 text-base font-semibold">{place.name}</p>
+              <div className="p-2 ">
+                <button className="cursor-default rounded-lg bg-green-300 py-1 px-2 text-xs font-semibold uppercase text-green-600">
+                  Partner
+                </button>
+              </div>
+            </div>
+            <p className="text-sm">{place.vicinity}</p>
+            <MapRating
+              rating={place.rating}
+              totalReviews={place.user_ratings_total}
+            />
+          </div>
+          <div className="self-center justify-self-end">
+            {place?.photos?.[0]?.photo_reference ? (
+              <img
+                src={url}
+                alt="Kopi"
+                className="h-24 w-24 rounded-lg object-cover shadow-lg"
+              />
+            ) : (
+              <img
+                src={altphotos}
+                alt="Kopi"
+                className="h-24 w-24 rounded-lg object-cover shadow-lg"
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="grid grid-cols-4 p-4 shadow-lg">
+          <div className="col-span-3 self-center">
+            <div className="row m-x-4 flex flex items-center justify-between">
+              <p className="text-base font-semibold">{place.name}</p>
+              <div className="p-2 "></div>
+            </div>
+            <p className="text-sm">{place.vicinity}</p>
+            <MapRating
+              rating={place.rating}
+              totalReviews={place.user_ratings_total}
+            />
+          </div>
+          <div className="self-center justify-self-end">
+            {place?.photos?.[0]?.photo_reference ? (
+              <img
+                src={url}
+                alt="Kopi"
+                className="h-24 w-24 rounded-lg object-cover shadow-lg"
+              />
+            ) : (
+              <img
+                src={altphotos}
+                alt="Kopi"
+                className="h-24 w-24 rounded-lg object-cover shadow-lg"
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

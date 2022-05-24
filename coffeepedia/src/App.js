@@ -16,7 +16,7 @@ import OrderTrackingPage from "./views/OrderTrackingPage";
 function App() {
   return (
     <div className="App flex justify-center bg-gray-200">
-      <div className="w-[620px]">
+      <div className="h-full w-[620px]">
         <Routes>
           <Route path="/" element={<OnboardingPage />} />
           <Route path="/register" element={<RegisterPage />} />
