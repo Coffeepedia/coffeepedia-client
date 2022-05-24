@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropdownMenu from "../components/DropdownMenu";
 import Loading from "../components/Loading";
 import OrderHistoryCard from "../components/OrderHistoryCard";
@@ -8,11 +8,15 @@ import { GET_ALL_ORDER } from "../queries/orders";
 
 export default function OrderHistoryPage() {
   // const [orders, setOrders] = useState([]);
-  const { loading, error, data } = useQuery(GET_ALL_ORDER, {
+  const { loading, error, data, refetch } = useQuery(GET_ALL_ORDER, {
     variables: {
       accesstoken: localStorage.accesstoken,
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (loading) {
     return <Loading />;
