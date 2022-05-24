@@ -16,11 +16,11 @@ export default function Map({
   return (
     <GoogleMapReact
       bootstrapURLKeys={{
-        key: apiFree,
+        key: apiVicto,
       }}
       defaultCenter={coordinates}
       center={coordinates}
-      defaultZoom={14}
+      defaultZoom={15}
       margin={[50, 50, 50, 50]}
       options={{
         disableDefaultUI: true,
@@ -44,10 +44,17 @@ export default function Map({
           key={i}
         >
           <div>
-            <LocationMarkerIcon
-              onClick={() => setChildClicked(place.place_id)}
-              className="h-8 text-gray-600 hover:h-9 hover:text-green-600"
-            />
+            {coffees.map((e) => e.place_id).includes(place.place_id) ? (
+              <LocationMarkerIcon
+                onClick={() => setChildClicked(place.place_id)}
+                className="h-10 text-green-600 hover:h-12"
+              />
+            ) : (
+              <LocationMarkerIcon
+                onClick={() => setChildClicked(place.place_id)}
+                className="h-8 text-gray-500 hover:h-9"
+              />
+            )}
           </div>
         </div>
       ))}

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import imgArticle from "../assets/svg/articles_onboarding.svg";
 import imgRadar from "../assets/svg/radar_onboarding.svg";
 import imgOrder from "../assets/svg/order_onboarding.svg";
+import logo from "../assets/Skyline.png";
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
@@ -30,32 +31,26 @@ export default function OnboardingPage() {
   ];
 
   return (
-    <section className="flex h-screen flex-col items-center bg-[#EFEAD8] pt-20">
+    <div className="flex h-screen w-screen max-w-[620px] flex-col items-center gap-y-16 bg-[#1f3933]">
       {/* Carousel */}
-      <ul className="flex snap-x snap-mandatory gap-20 overflow-x-auto before:w-[30vw] before:shrink-0 after:w-[30vw] after:shrink-0 md:gap-32">
-        {carouselItems.map((item, idx) => (
-          <li key={idx} className="shrink-0 snap-center">
-            <div className="max-w-80">
-              <img src={item.img} alt="News onboarding" className="w-80" />
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className=" flex w-full flex-col items-center justify-center gap-y-2 text-center">
+        <img src={logo} alt="" className="w-[120%]" />
+      </div>
 
-      <div className="mt-20 flex w-screen max-w-[620px] justify-between gap-x-8 px-4">
+      <div className="flex h-56 w-[80%] max-w-[620px] flex-col gap-y-4 p-10">
         <button
-          onClick={() => navigate("/register")}
-          className="basis-1/2 rounded-3xl border-2 border-p-dark bg-p-dark py-2 font-semibold text-white"
+          onClick={() => navigate("/radar")}
+          className="basis-1/2 rounded-[40px] bg-[#5F7161] py-2 font-semibold text-white hover:bg-primary "
         >
-          Register
+          Coffee Radar
         </button>
         <button
           onClick={() => navigate("/login")}
-          className="basis-1/2 rounded-3xl border-2 border-p-dark bg-white py-2 font-semibold text-p-dark"
+          className="basis-1/2 rounded-[40px] bg-white py-2 font-semibold text-p-dark hover:bg-primary hover:text-white "
         >
           Login
         </button>
       </div>
-    </section>
+    </div>
   );
 }

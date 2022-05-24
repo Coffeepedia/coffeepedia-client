@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Pricing from "../components/Pricing";
 import Rating from "../components/Rating";
@@ -41,6 +42,12 @@ export default function CoffeeShopDetailPage() {
       Closed
     </span>
   );
+
+  useEffect(() => {
+    getCoffeeDetail(id).then((data) => {
+      setCoffee(data);
+    });
+  }, []);
 
   const [addOrder] = useMutation(ADD_ORDER, {
     onCompleted: (data) => {
@@ -106,7 +113,7 @@ export default function CoffeeShopDetailPage() {
       <section className="absolute bottom-0 h-2/3 w-full rounded-t-[48px] bg-white px-8 pt-8">
         <div className="flex items-center justify-between">
           <div className="mb-2 text-2xl font-bold text-gray-700">
-            {coffeeShop.name}
+            {coffee.name}
           </div>
           <span className="rounded-xl bg-green-300 px-2 py-1 text-[10px] uppercase text-primary">
             Partner
@@ -114,8 +121,8 @@ export default function CoffeeShopDetailPage() {
         </div>
 
         <Rating
-          rating={coffeeShop.rating}
-          totalReviews={coffeeShop.user_ratings_total}
+          rating={coffee.rating}
+          totalReviews={coffee.user_ratings_total}
         />
 
         {/* Location */}
@@ -132,7 +139,7 @@ export default function CoffeeShopDetailPage() {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-gray-700">{coffeeShop.vicinity}</span>
+          <span className="text-gray-700">{coffee.vicinity}</span>
         </div>
 
         {/* Additional Detail Bar */}
@@ -164,7 +171,7 @@ export default function CoffeeShopDetailPage() {
           {/* Row */}
           <div className="flex items-center">
             <div className="basis-1/5 text-center">
-              <Pricing priceLevel={coffeeShop.price_level} />
+              {<Pricing priceLevel={coffee.price_level} />}
             </div>
 
             <span className="basis-1/5 text-center text-xs font-semibold">
@@ -224,6 +231,15 @@ export default function CoffeeShopDetailPage() {
           <div className="container mx-auto py-2 lg:px-32 lg:pt-24">
             <div className="-m-1 flex flex-wrap md:-m-2">
               <div className="flex flex-wrap">
+                {/* {coffee.photos?.map((photo) => (
+                  <div className="w-full p-1 md:p-2">
+                    <img
+                      alt="gallery"
+                      className="block h-full w-full rounded-lg object-cover object-center"
+                      src={photo + "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"}
+                    />
+                  </div>
+                ))} */}
                 <div className="w-full p-1 md:p-2">
                   <img
                     alt="gallery"
