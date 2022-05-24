@@ -26,6 +26,31 @@ export const GET_ORDER_BY_ID = gql`
   }
 `;
 
+export const GET_ALL_ORDER = gql`
+  query GetAllOrder($accesstoken: String) {
+    getAllOrder(accesstoken: $accesstoken) {
+      id
+      UserId
+      CoffeeShopId
+      status
+      createdAt
+      updatedAt
+      OrderDetails {
+        id
+        ItemId
+        OrderId
+        name
+        price
+        quantity
+        imageUrl
+        createdAt
+        updatedAt
+      }
+      errorText
+    }
+  }
+`;
+
 export const UPDATE_STATUS_ORDER = gql`
   mutation UpdateOrder(
     $updateOrderId: ID

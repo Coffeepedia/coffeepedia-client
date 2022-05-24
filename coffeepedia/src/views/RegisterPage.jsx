@@ -1,5 +1,8 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingSmall from "../components/LoadingSmall";
+import { REGISTER_USER } from "../queries/users";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -12,16 +15,24 @@ export default function RegisterPage() {
     address: "",
   });
 
+  const [registerUser, { loading, error }] = useMutation(REGISTER_USER, {
+    onCompleted: (data) => {
+      if (!error) {
+        navigate("/login");
+      }
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+    registerUser({ variables: data });
   };
 
   return (
     <>
       {/* Header */}
       <header className="bg-p-dark">
-        <div className="flex w-full items-center px-6 py-2">
+        <div className="items-center flex w-full px-6 py-2">
           {/* Back button */}
           <button onClick={() => navigate(-1)} className="basis-1/3">
             <svg
@@ -151,12 +162,19 @@ export default function RegisterPage() {
             Forgot password?
           </div>
 
-          <input
-            onClick={handleSubmit}
-            type="submit"
-            value="Register"
-            className="mb-2 w-full cursor-pointer rounded-3xl bg-p-dark py-2 text-white"
-          />
+          {loading ? (
+            <button className="mb-2 w-full cursor-pointer rounded-3xl bg-p-dark py-2 text-white">
+              <LoadingSmall />
+            </button>
+          ) : (
+            <input
+              onClick={handleSubmit}
+              type="submit"
+              value="Register"
+              className="mb-2 w-full cursor-pointer rounded-3xl bg-p-dark py-2 text-white"
+            />
+          )}
+
           <div className="text-center text-sm">
             Already have an account?{" "}
             <span

@@ -4,62 +4,31 @@ import Pricing from "../components/Pricing";
 import Rating from "../components/Rating";
 import { ADD_ORDER } from "../queries/orders";
 import { useMutation } from "@apollo/client";
-import { getCoffeeDetail } from "../api/coffeeDetail";
+import axios from "axios";
+import Loading from "../components/Loading";
 
 export default function CoffeeShopDetailPage() {
   const { id } = useParams();
-  const [coffee, setCoffee] = useState({});
-  const coffeeShop = {
-    business_status: "OPERATIONAL",
-    geometry: {
-      location: {
-        lat: -7.761909200000001,
-        lng: 110.3967393,
-      },
-      viewport: {
-        northeast: {
-          lat: -7.760636420107278,
-          lng: 110.3980832798927,
-        },
-        southwest: {
-          lat: -7.763336079892722,
-          lng: 110.3953836201073,
-        },
-      },
-    },
-    icon: "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/cafe-71.png",
-    icon_background_color: "#FF9E67",
-    icon_mask_base_uri:
-      "https://maps.gstatic.com/mapfiles/place_api/icons/v2/cafe_pinlet",
-    name: "Kene Coffee House",
-    opening_hours: {
-      open_now: false,
-    },
-    photos: [
-      {
-        height: 715,
-        html_attributions: [
-          '<a href="https://maps.google.com/maps/contrib/114288037740944169887">joe ki</a>',
-        ],
-        photo_reference:
-          "Aap_uECn8v5wHhwH7Z8YBGiCco_PCfNIxQ2UEWuknRwzFy1xabV-cKQjs4SHvXPs4VPNHjoscja_EpB1Xix7yR4G-m71zV_e3ayLfB5wvAV6QsuRKYt-S32SzoDJA8Jbir7QhQPPTvYIPxC2Oh0uXs9aUcyxbOspJAtqwLPw2ySECW2LoRgQ",
-        width: 1024,
-      },
-    ],
-    place_id: "ChIJ5ec-ZqNZei4RA3sWixI4LmQ",
-    plus_code: {
-      compound_code:
-        "69QW+6M Condongcatur, Sleman Regency, Special Region of Yogyakarta",
-      global_code: "6P4G69QW+6M",
-    },
-    price_level: 2,
-    rating: 4.6,
-    reference: "ChIJ5ec-ZqNZei4RA3sWixI4LmQ",
-    scope: "GOOGLE",
-    types: ["cafe", "food", "store", "point_of_interest", "establishment"],
-    user_ratings_total: 765,
-    vicinity: "Jl. Kaliwaru No.84, Kaliwaru, Condongcatur, Kabupaten Sleman",
-  };
+  const [coffeeShop, setCoffeeShop] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4002/maps/placeDetail?place_id=${id}`
+        );
+        setCoffeeShop({ ...data });
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError({ ...error.response.data });
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const Open = () => (
     <span className="rounded-lg bg-green-300 px-2 py-[2px] text-[10px] uppercase text-primary">
@@ -72,13 +41,7 @@ export default function CoffeeShopDetailPage() {
       Closed
     </span>
   );
-
-  useEffect(() => {
-    getCoffeeDetail(id).then((data) => {
-      setCoffee(data);
-    });
-  }, []);
-
+  
   const [addOrder] = useMutation(ADD_ORDER, {
     onCompleted: (data) => {
       localStorage.setItem("OrderId", data.AddOrder.Order.id);
@@ -89,31 +52,39 @@ export default function CoffeeShopDetailPage() {
   const navigate = useNavigate();
 
   const orderMenuHandler = () => {
-    addOrder({
-      variables: {
-        addOrderId: id,
-        accesstoken: localStorage.accesstoken,
-      },
-    });
+    if (localStorage.getItem("accesstoken")) {
+      addOrder({
+        variables: {
+          addOrderId: id,
+          accesstoken: localStorage.accesstoken,
+        },
+      });
+    } else {
+      navigate("/login");
+    }
   };
 
+  if (loading) {
+    return <Loading />;
+  } else if (Object.keys(error).length) {
+    return <p>Error...</p>;
+  }
+
   return (
-    <section className="relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col items-center">
+    <section className="items-center relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col">
       {/* Floating button */}
       <button
         onClick={orderMenuHandler}
-        className="fixed bottom-0 right-0 z-10 m-4 rounded-3xl  bg-primary px-6 py-2 font-bold text-white shadow-2xl"
+        className="fixed bottom-0 right-0 z-10 m-4 rounded-3xl bg-primary px-6 py-2 font-bold text-white shadow-2xl"
       >
         Order
       </button>
 
       {/* Banner Image */}
-      <div className="relative h-[40%] ">
+      <div className="relative h-[40%] w-full">
         <img
           src={
-            coffee.photos[0]
-              ? coffee.photos[0] + "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
-              : []
+            coffeeShop?.photos?.[0] + "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
           }
           alt="coffee shop"
           className="h-full w-full object-cover"
@@ -137,18 +108,18 @@ export default function CoffeeShopDetailPage() {
 
       {/* Detail */}
       <section className="absolute bottom-0 h-2/3 w-full rounded-t-[48px] bg-white px-8 pt-8">
-        <div className="flex items-center justify-between">
+        <div className="items-center flex justify-between">
           <div className="mb-2 text-2xl font-bold text-gray-700">
-            {coffee.name}
+            {coffeeShop.name}
           </div>
           <span className="rounded-xl bg-green-300 px-2 py-1 text-[10px] uppercase text-primary">
-            Partner Store
+            Partner
           </span>
         </div>
 
         <Rating
-          rating={coffee.rating}
-          totalReviews={coffee.user_ratings_total}
+          rating={coffeeShop.rating}
+          totalReviews={coffeeShop.user_ratings_total}
         />
 
         {/* Location */}
@@ -165,13 +136,13 @@ export default function CoffeeShopDetailPage() {
               clipRule="evenodd"
             />
           </svg>
-          <span className="text-gray-700">{coffee.vicinity}</span>
+          <span className="text-gray-700">{coffeeShop.vicinity}</span>
         </div>
 
         {/* Additional Detail Bar */}
         <div className="mb-6 flex flex-col">
           {/* Head */}
-          <div className="flex items-center pb-2">
+          <div className="items-center flex pb-2">
             {/* Travel time */}
             <span className="basis-1/5 text-center text-xs font-semibold text-gray-700">
               Pricing
@@ -195,13 +166,13 @@ export default function CoffeeShopDetailPage() {
           </div>
 
           {/* Row */}
-          <div className="flex items-center">
+          <div className="items-center flex">
             <div className="basis-1/5 text-center">
-              {<Pricing priceLevel={coffee.price_level} />}
+              {<Pricing priceLevel={coffeeShop.price_level} />}
             </div>
 
             <span className="basis-1/5 text-center text-xs font-semibold">
-              {coffee?.opening_hours?.open_now ? <Open /> : <Closed />}
+              {coffeeShop?.opening_hours?.open_now ? <Open /> : <Closed />}
             </span>
 
             <span className="flex basis-1/5 justify-center text-center text-xs font-semibold text-primary">
@@ -271,9 +242,8 @@ export default function CoffeeShopDetailPage() {
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
                     src={
-                      coffee.photos[1] &&
-                      coffee?.photos[1] +
-                        "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                      coffeeShop?.photos?.[1] +
+                      "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
                     }
                   />
                 </div>
@@ -282,9 +252,8 @@ export default function CoffeeShopDetailPage() {
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
                     src={
-                      coffee.photos[2] &&
-                      coffee.photos[2] +
-                        "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                      coffeeShop?.photos?.[2] +
+                      "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
                     }
                   />
                 </div>
@@ -293,9 +262,8 @@ export default function CoffeeShopDetailPage() {
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
                     src={
-                      coffee.photos[3] &&
-                      coffee?.photos[3] +
-                        "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                      coffeeShop?.photos?.[3] +
+                      "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
                     }
                   />
                 </div>

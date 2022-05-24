@@ -15,7 +15,7 @@ export default function SearchBar({ setCoordinates }) {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-p-dark">
       <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
         <div className="grid grid-cols-8 gap-4 rounded-[30px] bg-white p-2 shadow-lg ">
           <input

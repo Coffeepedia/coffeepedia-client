@@ -10,8 +10,8 @@ export default function Map({
   coffees,
   setChildClicked,
 }) {
-  const apiVicto = "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c";
-  const apiFree = "AIzaSyALtc-O5li5iNVzInPwqmitUEC57NCuyeA";
+  const apiVicto = process.env.REACT_APP_API_VICTO;
+  const apiFree = process.env.REACT_APP_API_FREE;
 
   return (
     <GoogleMapReact

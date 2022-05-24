@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import leftarrow from "../assets/leftarrow.png";
+import axios from "axios";
 import {
   DELETE_ORDER_ITEM,
   GET_ORDER_BY_ID,
@@ -16,8 +17,19 @@ export default function OrderPage() {
     getOrderByIdId: localStorage.OrderId,
   };
 
+  const [coffeeShop, setCoffeeShop] = useState({});
+
   const { loading, error, data, refetch } = useQuery(GET_ORDER_BY_ID, {
     variables: getOrderByIdVariables,
+    onCompleted: (data) => {
+      axios
+        .get(
+          "http://localhost:4002/maps/placeDetail?place_id=" +
+            data.getOrderById.CoffeeShopId
+        )
+        .then(({ data }) => setCoffeeShop(data))
+        .catch((error) => console.log(error));
+    },
   });
 
   useEffect(() => {
@@ -97,7 +109,7 @@ export default function OrderPage() {
     },
     onCompleted: (data) => {
       if (data?.UpdateOrder.message[0] === "Order status updated to paid") {
-        navigate(`/order/1`);
+        navigate(`/order/${localStorage.OrderId}`);
       }
     },
     onError: (error) => {
@@ -130,7 +142,7 @@ export default function OrderPage() {
           </div>
           <p className="text-lg font-bold text-white">Pickup Store</p>
           <div className="text-m w-full border-b-2 border-gray-400 bg-[#1F3933] font-medium text-white">
-            {data?.getOrderById?.CoffeeShopId}
+            {coffeeShop.name}
           </div>
         </div>
 
@@ -161,7 +173,7 @@ export default function OrderPage() {
                       </p>
 
                       {/* Quantity */}
-                      <div className="bg-cyan mt-2 flex flex-row items-center">
+                      <div className="bg-cyan items-center mt-2 flex flex-row">
                         <svg
                           onClick={() =>
                             updateQuantity(
@@ -221,7 +233,7 @@ export default function OrderPage() {
             style={{ position: "fixed", bottom: 0 }}
           >
             <div className="w-full rounded bg-p-dark">
-              <div className="flex flex-row items-center justify-between p-4">
+              <div className="items-center flex flex-row justify-between p-4">
                 <div className="grow text-center text-2xl font-bold text-white">
                   IDR {totalPrice()}
                 </div>
