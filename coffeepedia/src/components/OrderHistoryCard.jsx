@@ -15,12 +15,12 @@ export default function OrderHistoryCard({ order }) {
 
   const [rating, setRating] = useState({});
   return (
-    <div
-      onClick={() => navigate(`/order/${order.id}`)}
-      className="mb-2 cursor-pointer bg-white p-4"
-    >
+    <div className="mb-2 cursor-pointer bg-white p-4">
       {/* Header */}
-      <div className="flex justify-between">
+      <div
+        onClick={() => navigate(`/order/${order.id}`)}
+        className="flex justify-between"
+      >
         {/* Timestamp */}
         <div className="text-base font-semibold uppercase">
           {new Date(order.createdAt).toLocaleDateString("id-ID")},{" "}
@@ -49,12 +49,18 @@ export default function OrderHistoryCard({ order }) {
       </div>
 
       {/* Resto */}
-      <div className="mb-4 text-sm font-semibold text-gray-700">
+      <div
+        onClick={() => navigate(`/order/${order.id}`)}
+        className="mb-4 text-sm font-semibold text-gray-700"
+      >
         {loading ? <LoadingSmall /> : data.getCoffeeShopById.name}
       </div>
 
       {/* Items */}
-      <div className="mb-4 flex space-x-1 border-b border-gray-700 pb-4">
+      <div
+        onClick={() => navigate(`/order/${order.id}`)}
+        className="mb-4 flex space-x-1 border-b border-gray-700 pb-4"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5 shrink-0 fill-p-dark"
