@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../components/Loading";
 import { GET_ARTICLE } from "../queries/articles";
 
 export default function ArticleDetailPage() {
@@ -27,7 +28,7 @@ export default function ArticleDetailPage() {
   return (
     <div className="max-w-screen h-screen flex-col overflow-y-auto bg-s-light">
       {loading ? (
-        <p>Loading ...</p>
+        <Loading />
       ) : (
         <>
           <div className="relative">
@@ -48,8 +49,8 @@ export default function ArticleDetailPage() {
               xmlns="http://www.w3.org/2000/svg"
               className={
                 bookmark
-                  ? "absolute top-5 right-3 h-12 w-12 stroke-1"
-                  : "absolute top-5 right-3 h-12 w-12 fill-s-light stroke-p-dark stroke-1"
+                  ? "absolute top-5 right-3 h-12 w-12 fill-s-light stroke-p-dark stroke-1"
+                  : "absolute top-5 right-3 h-12 w-12 stroke-1"
               }
               fill="none"
               viewBox="0 0 24 24"
@@ -84,7 +85,7 @@ export default function ArticleDetailPage() {
             </div>
           </div>
           <div className="px-3 py-2">
-            <pre className="whitespace-pre-wrap font-sans text-justify">{data.getArticleById.content.split('\\n').join('\n\n')}</pre>
+            <pre className="whitespace-pre-wrap font-sans text-justify">{data.getArticleById.content.split('\n').join('\n\n')}</pre>
           </div>
         </>
       )}
