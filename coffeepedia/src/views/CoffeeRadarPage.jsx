@@ -5,6 +5,7 @@ import { getCoffeesData } from "../api/coffeeShops";
 import List from "../components/CoffeeRadar/List";
 import { getPlacesData } from "../api";
 import SearchBar from "../components/CoffeeRadar/SearchBar";
+import DropdownMenu from "../components/DropdownMenu";
 
 export default function OrderPage() {
   const [coffees, setCoffees] = useState([]);
@@ -15,11 +16,12 @@ export default function OrderPage() {
 
   useEffect(() => {
     setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
-    // navigator.geolocation.getCurrentPosition(
-    //   ({ coords: { latitude, longitude } }) => {
-    //     setCoordinates({ lat: latitude, lng: longitude });
-    //   }
-    // );
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        // setCoordinates({ lat: latitude, lng: longitude });
+        setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
+      }
+    );
     getCoffeesData().then((data) => {
       setCoffees(data);
     });
@@ -35,6 +37,7 @@ export default function OrderPage() {
   return (
     <>
       <div className="container-sm h-full bg-white">
+        <DropdownMenu />
         <div className="h-[80px] bg-[#1F3933] p-4">
           <div className="mb-4 mt-3 grid grid-cols-10">
             <img src={leftarrow} alt="" className="h-6 w-6" />

@@ -1,8 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import preparing from "../assets/svg/preparing.svg";
 import sent from "../assets/svg/sent.svg";
+import DropdownMenu from "../components/DropdownMenu";
+import Loading from "../components/Loading";
+import { GET_COFFEE_SHOP_BY_ID } from "../queries/coffeeShops";
 import { GET_ORDER_BY_ID, UPDATE_STATUS_ORDER } from "../queries/orders";
 
 export default function OrderTrackingPage() {
@@ -12,8 +16,19 @@ export default function OrderTrackingPage() {
     getOrderByIdId: id,
   };
 
+  const [coffeeShop, setCoffeeShop] = useState({});
+
   const { loading, error, data, refetch } = useQuery(GET_ORDER_BY_ID, {
     variables: getOrderByIdVariables,
+    onCompleted: (data) => {
+      axios
+        .get(
+          "http://localhost:4002/maps/placeDetail?place_id=" +
+            data.getOrderById.CoffeeShopId
+        )
+        .then(({ data }) => setCoffeeShop(data))
+        .catch((error) => console.log(error));
+    },
   });
 
   useEffect(() => {
@@ -68,13 +83,14 @@ export default function OrderTrackingPage() {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   } else if (error) {
     return <p>Error...</p>;
   }
 
   return (
     <section className="flex h-full min-h-screen w-screen max-w-[620px] flex-col">
+      <DropdownMenu />
       {/* Top Half */}
       <section className="min-h-1/2 h-1/2 w-full bg-p-dark">
         {/* Head Nav */}
@@ -105,33 +121,13 @@ export default function OrderTrackingPage() {
         {/* Order Details */}
         <div className="-mb-6 -translate-y-24 rounded-2xl bg-[#f5f5f5] p-6 shadow-md">
           <div className="mb-2 border-b-2 pb-2">
-            <div className="flex items-center space-x-2">
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 fill-orange-800"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-              </svg> */}
-              <h1 className="mb-1 text-xl font-bold">Kene Coffee House</h1>
+            <div className="items-center flex space-x-2">
+              <h1 className="mb-1 text-xl font-bold">{coffeeShop.name}</h1>
             </div>
 
-            <div className="flex items-center space-x-3">
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 fill-p-dark"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                  clipRule="evenodd"
-                />
-              </svg> */}
+            <div className="items-center flex space-x-3">
               <p className="text-xs font-semibold text-gray-600">
-                Jl. Kaliwaru No.84, Kaliwaru, Condongcatur, Kabupaten Sleman
+                {coffeeShop.vicinity}
               </p>
             </div>
           </div>
@@ -139,7 +135,7 @@ export default function OrderTrackingPage() {
           {data.getOrderById.OrderDetails.map((order) => (
             <div
               key={order.id}
-              className="mb-2 flex items-center justify-between"
+              className="items-center mb-2 flex justify-between"
             >
               <div className="space-x-2 text-sm font-semibold">
                 <span className="text-primary">{order.quantity + "x"}</span>
@@ -151,7 +147,7 @@ export default function OrderTrackingPage() {
             </div>
           ))}
 
-          <div className="mt-1 flex items-center justify-between border-t-2 pt-1">
+          <div className="items-center mt-1 flex justify-between border-t-2 pt-1">
             <div className="space-x-2 text-sm font-semibold">
               <span className="">Total</span>
             </div>
@@ -163,7 +159,7 @@ export default function OrderTrackingPage() {
         <div className="-translate-y-10 rounded-2xl bg-[#f5f5f5] shadow-lg">
           {/* Order Id */}
           <div className="mb-4 border-b-2 px-6 pt-6 pb-4">
-            <div className="flex items-center justify-between">
+            <div className="items-center flex justify-between">
               <span className="font-bold text-gray-700">Order ID.</span>
               <span className="text-gray-400">{generateOrderId()}</span>
             </div>

@@ -7,6 +7,27 @@ export const LOGIN_USER = gql`
       username
       balance
       accesstoken
+      email
+    }
+  }
+`;
+
+export const REGISTER_USER = gql`
+  mutation RegisterUser(
+    $username: String
+    $email: String
+    $password: String
+    $phoneNumber: String
+    $address: String
+  ) {
+    RegisterUser(
+      username: $username
+      email: $email
+      password: $password
+      phoneNumber: $phoneNumber
+      address: $address
+    ) {
+      message
     }
   }
 `;

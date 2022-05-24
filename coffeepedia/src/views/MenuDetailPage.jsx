@@ -2,6 +2,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import leftarrow from "../assets/leftarrow.png";
+import Loading from "../components/Loading";
+import LoadingSmall from "../components/LoadingSmall";
 import ViewCart from "../components/ViewCart";
 import { GET_ITEM_BY_ID } from "../queries/items";
 import { ADD_ORDER_DETAIL } from "../queries/orders";
@@ -38,7 +40,6 @@ export default function MenuDetailPage() {
   }, [cupSize]);
 
   const addToOrder = () => {
-    console.log("add order detail");
     addOrderDetail({
       variables: {
         accesstoken: localStorage.accesstoken,
@@ -60,7 +61,7 @@ export default function MenuDetailPage() {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   } else if (error) {
     return <p>Error...</p>;
   }
@@ -169,12 +170,14 @@ export default function MenuDetailPage() {
       </div>
 
       {/* Floating button */}
-      <button
-        onClick={addToOrder}
-        className="fixed bottom-20 right-4 rounded-3xl bg-primary px-6 py-2 text-lg font-bold text-white md:right-48"
-      >
-        Add to Order
-      </button>
+      <div className="items-center fixed bottom-20 right-4 flex space-x-6">
+        <button
+          onClick={addToOrder}
+          className="w-[160px] rounded-3xl bg-primary px-6 py-2 text-lg font-bold text-white md:right-48"
+        >
+          {mutationLoading ? <LoadingSmall /> : "Add to Order"}
+        </button>
+      </div>
 
       {/* Cart */}
       <ViewCart />

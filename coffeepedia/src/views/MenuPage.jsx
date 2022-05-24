@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ITEMS } from "../queries/items";
 import ViewCart from "../components/ViewCart";
 import DropdownMenu from "../components/DropdownMenu";
+import Loading from "../components/Loading";
 
 export default function HomePage() {
   const categoriesUrl = "http://localhost:4003/categories";
@@ -61,7 +62,7 @@ export default function HomePage() {
   };
 
   if (categories.loading || loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   } else if (Object.keys(categories.error).length || error) {
     return <p>Error...</p>;
   }
@@ -74,7 +75,7 @@ export default function HomePage() {
       >
         {/* <HeaderNav /> */}
         <DropdownMenu />
-        <div className="pt-24 mb-6 border-b border-black bg-s-light pb-2">
+        <div className="mb-6 border-b border-black bg-s-light pt-24 pb-2">
           <div className="px-4">
             <p className="mb-2 text-2xl font-[700]">Menu</p>
           </div>

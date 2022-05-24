@@ -10,7 +10,7 @@ export default function ViewCart() {
     >
       <button
         onClick={() => navigate("/order")}
-        className="flex h-[40px] w-full flex-row items-center justify-center space-x-4 rounded bg-p-dark px-4 font-semibold hover:bg-[#33534B]"
+        className="flex h-[40px] w-full flex-row items-center justify-center space-x-4 rounded bg-primary px-4 font-semibold hover:bg-[#33534B]"
       >
         <div className="text-white">View Cart</div>
         <div>

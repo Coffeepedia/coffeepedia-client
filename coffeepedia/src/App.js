@@ -33,6 +33,14 @@ function App() {
           <Route path="/coffeeshops/:id" element={<CoffeeShopDetailPage />} />
           <Route path="/order/:id" element={<OrderTrackingPage />} />
           <Route path="/order/history" element={<OrderHistoryPage />} />
+          <Route
+            path="*"
+            element={
+              <p className="cursor-default py-20 text-center text-2xl">
+                There's nothing here: <span className="underline">404!</span>
+              </p>
+            }
+          />
         </Routes>
       </div>
     </div>

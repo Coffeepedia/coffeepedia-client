@@ -5,6 +5,7 @@ import { ADD_ORDER } from "../queries/orders";
 import { useMutation } from "@apollo/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 
 export default function CoffeeShopDetailPage() {
   const { id } = useParams();
@@ -60,7 +61,7 @@ export default function CoffeeShopDetailPage() {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   } else if (Object.keys(error).length) {
     return <p>Error...</p>;
   }

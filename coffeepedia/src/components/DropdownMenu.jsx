@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function DropdownMenu() {
   let Links = [
@@ -10,11 +10,17 @@ export default function DropdownMenu() {
 
   let [open, setOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   return (
     <div className="fixed top-0 left-0 z-50 w-full shadow-md">
       <div className="items-center bg-white py-4 px-4 ">
-        <div className="items-center flex cursor-pointer text-2xl font-bold text-gray-800">
-          <span className="mr-1 text-2xl text-primary">logo</span>
+        <div
+          onClick={() => navigate("/")}
+          className="items-center flex cursor-pointer text-2xl font-bold text-gray-800"
+        >
+          <span className="text-2xl text-[#6F4E37]">Coffee</span>
+          <span className="text-2xl text-primary">pedia</span>
         </div>
 
         <div
@@ -57,12 +63,12 @@ export default function DropdownMenu() {
           {/* Close */}
         </div>
         <ul
-          className={`absolute left-0 z-[-1] w-full bg-white pb-12 pl-9 transition-all duration-500 ease-in ${
+          className={`absolute left-0 z-[-1] w-full bg-white px-4 pb-12 transition-all duration-500 ease-in ${
             open ? "top-16" : "top-[-200px]"
           }`}
         >
           {Links.map((link) => (
-            <li key={link.name} className="mt-6 mb-3 border-b pb-3 text-xl">
+            <li key={link.name} className="pb-3 text-lg font-semibold">
               <Link to={link.link} className="text-gray-800">
                 {link.name}
               </Link>
