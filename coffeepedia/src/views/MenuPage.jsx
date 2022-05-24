@@ -1,11 +1,11 @@
 import HeaderNav from "../components/HeaderNav";
 import MenuCard from "../components/MenuCard";
-import search from "../assets/search.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useQuery } from "@apollo/client";
 import { GET_ITEMS } from "../queries/items";
 import ViewCart from "../components/ViewCart";
+import DropdownMenu from "../components/DropdownMenu";
 
 export default function HomePage() {
   const categoriesUrl = "http://localhost:4003/categories";
@@ -67,13 +67,14 @@ export default function HomePage() {
   }
 
   return (
-    <div className="h-full min-h-screen w-screen">
+    <div className="h-full min-h-screen w-screen max-w-[620px]">
       <div
         className="container-sm h-full bg-[#EFEAD8]"
         style={{ position: "relative" }}
       >
-        <HeaderNav />
-        <div className="sticky top-0 mb-6 border-b border-black bg-s-light pb-2">
+        {/* <HeaderNav /> */}
+        <DropdownMenu />
+        <div className="pt-24 mb-6 border-b border-black bg-s-light pb-2">
           <div className="px-4">
             <p className="mb-2 text-2xl font-[700]">Menu</p>
           </div>
