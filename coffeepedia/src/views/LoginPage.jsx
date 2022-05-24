@@ -1,14 +1,24 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LOGIN_USER } from "../queries/users";
 
 export default function LoginPage() {
   const navigate = useNavigate();
 
   const [data, setData] = useState({ email: "", password: "" });
 
+  const [loginUser] = useMutation(LOGIN_USER, {
+    onCompleted: (data) => {
+      localStorage.setItem("accesstoken", data.LoginUser.accesstoken);
+      localStorage.setItem("email", data.LoginUser.username);
+      navigate("/radar", { replace: true });
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+    loginUser({ variables: data });
   };
 
   return (
