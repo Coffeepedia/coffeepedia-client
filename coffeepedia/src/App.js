@@ -12,6 +12,7 @@ import RegisterPage from "./views/RegisterPage";
 import MenuDetailPage from "./views/MenuDetailPage";
 import CoffeeShopDetailPage from "./views/CoffeeShopDetailPage";
 import OrderTrackingPage from "./views/OrderTrackingPage";
+import OrderHistoryPage from "./views/OrderHistoryPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/detail/:id" element={<MenuDetailPage />} />
           <Route path="/coffeeshops/:id" element={<CoffeeShopDetailPage />} />
           <Route path="/order/:id" element={<OrderTrackingPage />} />
+          <Route path="/order/history" element={<OrderHistoryPage />} />
         </Routes>
       </div>
     </div>

@@ -3,60 +3,31 @@ import Pricing from "../components/Pricing";
 import Rating from "../components/Rating";
 import { ADD_ORDER } from "../queries/orders";
 import { useMutation } from "@apollo/client";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function CoffeeShopDetailPage() {
   const { id } = useParams();
-  const coffeeShop = {
-    business_status: "OPERATIONAL",
-    geometry: {
-      location: {
-        lat: -7.761909200000001,
-        lng: 110.3967393,
-      },
-      viewport: {
-        northeast: {
-          lat: -7.760636420107278,
-          lng: 110.3980832798927,
-        },
-        southwest: {
-          lat: -7.763336079892722,
-          lng: 110.3953836201073,
-        },
-      },
-    },
-    icon: "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/cafe-71.png",
-    icon_background_color: "#FF9E67",
-    icon_mask_base_uri:
-      "https://maps.gstatic.com/mapfiles/place_api/icons/v2/cafe_pinlet",
-    name: "Kene Coffee House",
-    opening_hours: {
-      open_now: false,
-    },
-    photos: [
-      {
-        height: 715,
-        html_attributions: [
-          '<a href="https://maps.google.com/maps/contrib/114288037740944169887">joe ki</a>',
-        ],
-        photo_reference:
-          "Aap_uECn8v5wHhwH7Z8YBGiCco_PCfNIxQ2UEWuknRwzFy1xabV-cKQjs4SHvXPs4VPNHjoscja_EpB1Xix7yR4G-m71zV_e3ayLfB5wvAV6QsuRKYt-S32SzoDJA8Jbir7QhQPPTvYIPxC2Oh0uXs9aUcyxbOspJAtqwLPw2ySECW2LoRgQ",
-        width: 1024,
-      },
-    ],
-    place_id: "ChIJ5ec-ZqNZei4RA3sWixI4LmQ",
-    plus_code: {
-      compound_code:
-        "69QW+6M Condongcatur, Sleman Regency, Special Region of Yogyakarta",
-      global_code: "6P4G69QW+6M",
-    },
-    price_level: 2,
-    rating: 4.6,
-    reference: "ChIJ5ec-ZqNZei4RA3sWixI4LmQ",
-    scope: "GOOGLE",
-    types: ["cafe", "food", "store", "point_of_interest", "establishment"],
-    user_ratings_total: 765,
-    vicinity: "Jl. Kaliwaru No.84, Kaliwaru, Condongcatur, Kabupaten Sleman",
-  };
+  const [coffeeShop, setCoffeeShop] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4002/maps/placeDetail?place_id=${id}`
+        );
+        setCoffeeShop({ ...data });
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError({ ...error.response.data });
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const Open = () => (
     <span className="rounded-lg bg-green-300 px-2 py-[2px] text-[10px] uppercase text-primary">
@@ -88,22 +59,30 @@ export default function CoffeeShopDetailPage() {
     });
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  } else if (Object.keys(error).length) {
+    return <p>Error...</p>;
+  }
+
   return (
     <section className="relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col items-center">
       {/* Floating button */}
       <button
         onClick={orderMenuHandler}
-        className="fixed bottom-0 right-0 z-10 m-4 rounded-3xl  bg-primary px-6 py-2 font-bold text-white shadow-2xl"
+        className="fixed bottom-0 right-0 z-10 m-4 rounded-3xl bg-primary px-6 py-2 font-bold text-white shadow-2xl"
       >
         Order
       </button>
 
       {/* Banner Image */}
-      <div className="relative h-[40%]">
+      <div className="relative h-[40%] w-full">
         <img
-          src="https://img.freepik.com/free-psd/arrangement-coffee-cup-mock-up_23-2149012045.jpg?t=st=1653194883~exp=1653195483~hmac=2ef071e3900c500339e774de3ef2875ef16d2ce72112c66819f548964fa7f590&w=996"
+          src={
+            coffeeShop?.photos?.[0] + "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+          }
           alt="coffee shop"
-          className="h-full object-cover"
+          className="h-full w-full object-cover"
         />
         <svg
           onClick={() => navigate(-1)}
@@ -129,7 +108,7 @@ export default function CoffeeShopDetailPage() {
             {coffeeShop.name}
           </div>
           <span className="rounded-xl bg-green-300 px-2 py-1 text-[10px] uppercase text-primary">
-            Partner Store
+            Partner
           </span>
         </div>
 
@@ -188,7 +167,7 @@ export default function CoffeeShopDetailPage() {
             </div>
 
             <span className="basis-1/5 text-center text-xs font-semibold">
-              {coffeeShop.opening_hours.open_now ? <Open /> : <Closed />}
+              {coffeeShop?.opening_hours?.open_now ? <Open /> : <Closed />}
             </span>
 
             <span className="flex basis-1/5 justify-center text-center text-xs font-semibold text-primary">
@@ -248,21 +227,30 @@ export default function CoffeeShopDetailPage() {
                   <img
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
-                    src="https://cdn.pixabay.com/photo/2016/03/26/23/23/starbucks-1281880_960_720.jpg"
+                    src={
+                      coffeeShop?.photos?.[1] +
+                      "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                    }
                   />
                 </div>
                 <div className="w-1/2 p-1 md:p-2">
                   <img
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
-                    src="https://cdn.pixabay.com/photo/2020/08/17/14/37/coffee-5495609_960_720.jpg"
+                    src={
+                      coffeeShop?.photos?.[2] +
+                      "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                    }
                   />
                 </div>
                 <div className="w-1/2 p-1 md:p-2">
                   <img
                     alt="gallery"
                     className="block h-full w-full rounded-lg object-cover object-center"
-                    src="https://cdn.pixabay.com/photo/2020/10/07/12/33/cafe-5635015_960_720.jpg"
+                    src={
+                      coffeeShop?.photos?.[3] +
+                      "AIzaSyDSs66WVUrz42nhXym57VSndmOyUF7Jq9c"
+                    }
                   />
                 </div>
               </div>

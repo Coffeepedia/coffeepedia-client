@@ -97,7 +97,7 @@ export default function OrderPage() {
     },
     onCompleted: (data) => {
       if (data?.UpdateOrder.message[0] === "Order status updated to paid") {
-        navigate(`/order/1`);
+        navigate(`/order/${localStorage.OrderId}`);
       }
     },
     onError: (error) => {

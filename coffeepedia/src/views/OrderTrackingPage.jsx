@@ -1,14 +1,15 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import preparing from "../assets/svg/preparing.svg";
 import sent from "../assets/svg/sent.svg";
 import { GET_ORDER_BY_ID, UPDATE_STATUS_ORDER } from "../queries/orders";
 
 export default function OrderTrackingPage() {
+  const { id } = useParams();
   const getOrderByIdVariables = {
     accesstoken: localStorage.accesstoken,
-    getOrderByIdId: localStorage.OrderId,
+    getOrderByIdId: id,
   };
 
   const { loading, error, data, refetch } = useQuery(GET_ORDER_BY_ID, {
@@ -188,7 +189,8 @@ export default function OrderTrackingPage() {
 
             {/* Ready */}
             <div className="flex space-x-4">
-              {data.getOrderById.status === "paid" ? (
+              {data.getOrderById.status === "paid" ||
+              data.getOrderById.status === "unpaid" ? (
                 <img
                   src={preparing}
                   alt="preparing"

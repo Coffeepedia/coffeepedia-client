@@ -119,7 +119,7 @@ export default function MenuDetailPage() {
       {/* Item Image */}
       <div className="flex h-1/2 w-full flex-col justify-items-stretch bg-[#1F3933] pb-4 shadow-lg">
         <div className="flex w-full flex-row items-center justify-center">
-          <p className="text-3xl font-bold text-white">
+          <p className="px-4 text-center text-3xl font-bold text-white">
             {data.getItemById.name}
           </p>
         </div>
