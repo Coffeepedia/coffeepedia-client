@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:4002";
+const url = process.env.REACT_APP_COFFEESHOPS;
 
 export const getCoffeeDetail = async (id) => {
   try {

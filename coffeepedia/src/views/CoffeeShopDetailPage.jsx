@@ -18,7 +18,7 @@ export default function CoffeeShopDetailPage() {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `http://localhost:4002/maps/placeDetail?place_id=${id}`
+          `https://cfpd-service-coffee-shops.herokuapp.com/maps/placeDetail?place_id=${id}`
         );
         setCoffeeShop({ ...data });
         setLoading(false);
@@ -41,7 +41,7 @@ export default function CoffeeShopDetailPage() {
       Closed
     </span>
   );
-  
+
   const [addOrder] = useMutation(ADD_ORDER, {
     onCompleted: (data) => {
       localStorage.setItem("OrderId", data.AddOrder.Order.id);
@@ -71,7 +71,7 @@ export default function CoffeeShopDetailPage() {
   }
 
   return (
-    <section className="items-center relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col">
+    <section className="relative flex h-screen min-h-screen w-screen max-w-[620px] flex-col items-center">
       {/* Floating button */}
       <button
         onClick={orderMenuHandler}
@@ -108,7 +108,7 @@ export default function CoffeeShopDetailPage() {
 
       {/* Detail */}
       <section className="absolute bottom-0 h-2/3 w-full rounded-t-[48px] bg-white px-8 pt-8">
-        <div className="items-center flex justify-between">
+        <div className="flex items-center justify-between">
           <div className="mb-2 text-2xl font-bold text-gray-700">
             {coffeeShop.name}
           </div>
@@ -142,7 +142,7 @@ export default function CoffeeShopDetailPage() {
         {/* Additional Detail Bar */}
         <div className="mb-6 flex flex-col">
           {/* Head */}
-          <div className="items-center flex pb-2">
+          <div className="flex items-center pb-2">
             {/* Travel time */}
             <span className="basis-1/5 text-center text-xs font-semibold text-gray-700">
               Pricing
@@ -166,7 +166,7 @@ export default function CoffeeShopDetailPage() {
           </div>
 
           {/* Row */}
-          <div className="items-center flex">
+          <div className="flex items-center">
             <div className="basis-1/5 text-center">
               {<Pricing priceLevel={coffeeShop.price_level} />}
             </div>

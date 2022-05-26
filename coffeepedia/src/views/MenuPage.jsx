@@ -9,7 +9,7 @@ import DropdownMenu from "../components/DropdownMenu";
 import Loading from "../components/Loading";
 
 export default function HomePage() {
-  const categoriesUrl = "http://localhost:4003/categories";
+  const categoriesUrl = "https://cfpd-service-orders.herokuapp.com/categories";
   const [categories, setCategories] = useState({
     loading: false,
     error: {},

@@ -35,6 +35,7 @@ export default function OrderHistoryPage() {
       {/* Card */}
       {data.getAllOrder
         .filter((e) => e.status !== "unpaid")
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .map((order) => (
           <OrderHistoryCard key={order.id} order={order} />
         ))}

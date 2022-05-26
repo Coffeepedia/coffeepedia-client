@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:4002/maps/nearbySearch";
+const url = "https://cfpd-service-coffee-shops.herokuapp.com/maps/nearbySearch";
 
 export const getPlacesData = async (sw, ne, center) => {
   try {

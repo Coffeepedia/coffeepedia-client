@@ -55,7 +55,7 @@ export default function RegisterPage() {
       </header>
 
       {/* Register */}
-      <section className="flex h-screen flex-col bg-[#EFEAD8] px-6 pt-10">
+      <section className="flex min-h-screen h-full  flex-col bg-[#EFEAD8] px-6 pt-10">
         <h1 className="mb-14 text-3xl font-semibold text-p-dark">
           Join Coffeepedia!
         </h1>

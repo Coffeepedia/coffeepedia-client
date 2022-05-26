@@ -22,7 +22,7 @@ export default function OrderTrackingPage() {
     onCompleted: (data) => {
       axios
         .get(
-          "http://localhost:4002/maps/placeDetail?place_id=" +
+          "https://cfpd-service-coffee-shops.herokuapp.com/maps/placeDetail?place_id=" +
             data.getOrderById.CoffeeShopId
         )
         .then(({ data }) => setCoffeeShop(data))
@@ -36,7 +36,6 @@ export default function OrderTrackingPage() {
       data?.getOrderById.status !== "delivered"
     ) {
       setInterval(() => {
-        console.log("terpanggil");
         refetch();
       }, 5000);
     }
@@ -91,7 +90,7 @@ export default function OrderTrackingPage() {
     <section className="flex h-screen min-h-screen w-screen max-w-[620px] flex-col">
       <DropdownMenu />
       {/* Top Half */}
-      <section className="min-h-1/2 h-1/2 w-full bg-p-dark">
+      <section className="h-1/2 min-h-[250px] w-full bg-p-dark">
         {/* Head Nav */}
         <header className="relative py-4">
           <svg
@@ -118,13 +117,13 @@ export default function OrderTrackingPage() {
       {/* Bottom Half */}
       <section className="h-full w-full bg-s-light px-6 pb-6">
         {/* Order Details */}
-        <div className="-mb-6 -translate-y-24 rounded-2xl bg-[#f5f5f5] p-6 shadow-md">
+        <div className="-mb-6 -translate-y-32 rounded-2xl bg-[#f5f5f5] p-6 shadow-md">
           <div className="mb-2 border-b-2 pb-2">
-            <div className="items-center flex space-x-2">
+            <div className="flex items-center space-x-2">
               <h1 className="mb-1 text-xl font-bold">{coffeeShop.name}</h1>
             </div>
 
-            <div className="items-center flex space-x-3">
+            <div className="flex items-center space-x-3">
               <p className="text-xs font-semibold text-gray-600">
                 {coffeeShop.vicinity}
               </p>
@@ -134,7 +133,7 @@ export default function OrderTrackingPage() {
           {data.getOrderById.OrderDetails.map((order) => (
             <div
               key={order.id}
-              className="items-center mb-2 flex justify-between"
+              className="mb-2 flex items-center justify-between"
             >
               <div className="space-x-2 text-sm font-semibold">
                 <span className="text-primary">{order.quantity + "x"}</span>
@@ -146,7 +145,7 @@ export default function OrderTrackingPage() {
             </div>
           ))}
 
-          <div className="items-center mt-1 flex justify-between border-t-2 pt-1">
+          <div className="mt-1 flex items-center justify-between border-t-2 pt-1">
             <div className="space-x-2 text-sm font-semibold">
               <span className="">Total</span>
             </div>
@@ -155,10 +154,10 @@ export default function OrderTrackingPage() {
         </div>
 
         {/* Card Tracker */}
-        <div className="-translate-y-10 rounded-2xl bg-[#f5f5f5] shadow-lg">
+        <div className="-translate-y-20 rounded-2xl bg-[#f5f5f5] shadow-lg">
           {/* Order Id */}
           <div className="mb-4 border-b-2 px-6 pt-6 pb-4">
-            <div className="items-center flex justify-between">
+            <div className="flex items-center justify-between">
               <span className="font-bold text-gray-700">Order ID.</span>
               <span className="text-gray-400">{generateOrderId()}</span>
             </div>

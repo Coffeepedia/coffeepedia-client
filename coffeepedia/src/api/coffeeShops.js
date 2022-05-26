@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:4002/coffeeshops";
+const url = "https://cfpd-service-coffee-shops.herokuapp.com/coffeeshops";
 
 export const getCoffeesData = async () => {
   try {

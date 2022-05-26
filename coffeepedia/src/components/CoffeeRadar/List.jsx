@@ -20,8 +20,27 @@ export default function List({ places, childClicked }) {
     );
   }, [places]);
 
+  const Disclaimer = () => {
+    const parterIds = coffees.map((e) => e.place_id);
+    const partnersInLocation = places.filter((place) =>
+      parterIds.includes(place.place_id)
+    );
+    if (partnersInLocation.length) {
+      return null;
+    }
+    return (
+      <div className="w-screen border bg-gray-100 p-4">
+        <h1 className="text-red-600">
+          There is no Coffeepedia Partner in your area
+        </h1>
+        <p className="font-semibold">Try to search near "Senopati"</p>
+      </div>
+    );
+  };
+
   return (
     <div>
+      <Disclaimer />
       {places.map((place, i) => (
         <div
           ref={elRefs[i]}

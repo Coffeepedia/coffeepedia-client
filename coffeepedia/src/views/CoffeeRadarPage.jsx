@@ -17,11 +17,11 @@ export default function OrderPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
+    // setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
-        // setCoordinates({ lat: latitude, lng: longitude });
-        setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
+        setCoordinates({ lat: latitude, lng: longitude });
+        // setCoordinates({ lat: -6.230685467887753, lng: 106.80885546903032 });
       }
     );
     getCoffeesData().then((data) => {

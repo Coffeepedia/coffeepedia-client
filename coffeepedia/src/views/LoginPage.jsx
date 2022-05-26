@@ -8,12 +8,17 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const [data, setData] = useState({ email: "", password: "" });
+  const [afterLogin, setAfterLogin] = useState("");
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     onCompleted: (data) => {
-      localStorage.setItem("accesstoken", data.LoginUser.accesstoken);
-      localStorage.setItem("email", data.LoginUser.email);
-      navigate("/radar", { replace: true });
+      if (data.LoginUser.id) {
+        localStorage.setItem("accesstoken", data.LoginUser.accesstoken);
+        localStorage.setItem("email", data.LoginUser.email);
+        navigate("/radar", { replace: true });
+      } else {
+        setAfterLogin("error");
+      }
     },
   });
 
@@ -26,7 +31,7 @@ export default function LoginPage() {
     <>
       {/* Header */}
       <header className="bg-p-dark">
-        <div className="items-center flex w-full px-6 py-2">
+        <div className="flex w-full items-center px-6 py-2">
           {/* Back button */}
           <button onClick={() => navigate(-1)} className="basis-1/3">
             <svg
@@ -96,6 +101,12 @@ export default function LoginPage() {
           <div className="mb-8 cursor-pointer text-right text-sm font-bold text-p-dark">
             Forgot password?
           </div>
+
+          {afterLogin === "error" && (
+            <div className="mb-8 cursor-pointer text-center text-sm font-bold text-red-600">
+              Email or Password invalid
+            </div>
+          )}
 
           {loading ? (
             <button className="mb-2 w-full cursor-pointer rounded-3xl bg-p-dark py-2 text-white">

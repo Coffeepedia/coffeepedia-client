@@ -28,7 +28,7 @@ export default function OrderHistoryCard({ order }) {
         </div>
 
         {/* Total Price */}
-        <div className="items-center flex space-x-2">
+        <div className="flex items-center space-x-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 fill-primary"
@@ -43,7 +43,10 @@ export default function OrderHistoryCard({ order }) {
           </svg>
           <div className="text-base font-semibold">
             IDR{" "}
-            {order.OrderDetails.reduce((total, item) => total + item.price, 0)}
+            {order.OrderDetails.reduce(
+              (total, item) => total + item.price * item.quantity,
+              0
+            )}
           </div>
         </div>
       </div>
@@ -83,12 +86,12 @@ export default function OrderHistoryCard({ order }) {
       </div>
 
       {/* Review */}
-      <div className="items-center flex justify-between">
+      <div className="flex items-center justify-between">
         <button className="text-xs font-bold uppercase text-red-500">
           Order Again
         </button>
 
-        <div class="items-center flex">
+        <div class="flex items-center">
           {[1, 2, 3, 4, 5].map((rate) => (
             <svg
               key={rate}
